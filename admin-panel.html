@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanpur Karigar — Admin Dispatch Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="device-wrapper">
+    <a href="index.html" class="hub-pill"><i class="fa-solid fa-arrow-left"></i> All Screens</a>
+    <div class="notch"><div class="lens"></div></div>
+
+    <div class="screen-viewport">
+      <div class="status-bar">
+        <span class="status-bar-time">9:41</span>
+        <div class="status-icons">
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
+        </div>
+      </div>
+
+      <div class="app-screen" style="padding-bottom:30px;">
+        <div style="background:#1C1917;color:#FFF;padding:12px;border-radius:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:13px;font-weight:800;"><i class="fa-solid fa-shield-halved" style="color:var(--primary);"></i> Admin Operations Portal</span>
+          <span class="tag green" style="font-size:10px;">Internal Only</span>
+        </div>
+
+        <div class="card" style="border-left:4px solid var(--primary);">
+          <div style="font-size:13px;font-weight:800;margin-bottom:6px;">Pending Match Request #101</div>
+          <div style="font-size:12px;color:#44403C;line-height:1.5;">
+            <b>Employer:</b> Sharma Sweets & Caterers<br>
+            <b>Candidate:</b> Ramesh Kumar (Halwai, 8 Yrs Exp)<br>
+            <b>Status:</b> Requested direct contact
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <button class="btn-primary" style="padding:7px 12px;font-size:11px;width:auto;" onclick="showToast('📞 Calling Karigar Ramesh Kumar (+91-98390XXXXX)...')">
+              <i class="fa-solid fa-phone"></i> Call Karigar
+            </button>
+            <button class="btn-whatsapp" style="padding:7px 12px;font-size:11px;width:auto;" onclick="showToast('🤝 Connecting Sharma Sweets with Ramesh Kumar via 3-way call!')">
+              Connect Employer
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:13px;font-weight:800;margin-bottom:6px;">Incoming WhatsApp Leads</div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.4;">
+            +91-97XXXXXX21: <i>"Chinese cook with 5 yrs dhaba experience, looking for orders in Swaroop Nagar."</i>
+          </p>
+          <a class="btn-primary" href="karigar-reg.html" style="padding:7px 12px;font-size:11px;margin-top:8px;background:#44403C;box-shadow:none;width:auto;display:inline-flex;">
+            + Create Worker Profile
+          </a>
+        </div>
+
+        <a class="btn-outline" href="employer-dashboard.html" style="margin-top:8px;">
+          ← Exit Admin & Return to App
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+

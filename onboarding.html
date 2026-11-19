@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanpur Karigar — Onboarding & Auth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .onboarding-step { display: none; }
+  .onboarding-step.active { display: block; animation: fadeIn 0.25s ease-out; }
+  #step-splash.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(160deg, #F05A28 0%, #D44211 50%, #992905 100%);
+    color: #FFF;
+    height: 100%;
+    min-height: 700px;
+    padding: 60px 24px 36px 24px;
+    border-radius: 44px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="device-wrapper">
+    <a href="index.html" class="hub-pill"><i class="fa-solid fa-arrow-left"></i> All Screens</a>
+    <div class="notch"><div class="lens"></div></div>
+
+    <div class="screen-viewport">
+      <div class="status-bar" id="onboarding-statusbar">
+        <span class="status-bar-time" style="color:#FFF;">9:41</span>
+        <div class="status-icons" style="color:#FFF;">
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
+        </div>
+      </div>
+
+      <!-- STEP 1: SPLASH -->
+      <div id="step-splash" class="onboarding-step active">
+        <div></div>
+        <div>
+          <div class="splash-logo"><i class="fa-solid fa-utensils"></i></div>
+          <div class="splash-title">Kanpur Karigar</div>
+          <div class="splash-sub">Artisan Trust • Local Trade</div>
+          <p style="font-size:13px;opacity:0.9;margin-top:10px;">Kanpur's Own Food Artisan Hiring Platform</p>
+          <div style="margin-top:16px;display:flex;justify-content:center;gap:8px;">
+            <span class="tag" style="background:rgba(255,255,255,0.25);color:#FFF;">100% Verified</span>
+            <span class="tag" style="background:rgba(255,255,255,0.25);color:#FFF;">Instant Match</span>
+          </div>
+        </div>
+        <div style="width:100%;">
+          <button class="btn-primary" style="background:#FFF;color:var(--primary);" onclick="goToStep('step-lang')">
+            Get Started <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <p style="font-size:11px;opacity:0.75;margin-top:12px;">Kidwai Nagar • Swaroop Nagar • Gumti No. 5 • Civil Lines</p>
+        </div>
+      </div>
+
+      <!-- STEP 2: LANGUAGE -->
+      <div id="step-lang" class="onboarding-step" style="padding: 12px 18px 40px 18px;">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToStep('step-splash')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag primary">Step 1 of 3</span>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:6px;">Choose Language</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;">Select your preferred app browsing language</p>
+
+        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:17px;font-weight:800;color:var(--primary-dark);">English (Selected)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Standard app experience in English</div>
+            </div>
+            <i class="fa-solid fa-circle-check" style="color:var(--primary);font-size:22px;"></i>
+          </div>
+        </div>
+
+        <div class="card" style="cursor:pointer;opacity:0.75;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:17px;font-weight:700;">Hindi (हिन्दी)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Regional language audio assistance</div>
+            </div>
+            <i class="fa-regular fa-circle" style="color:#D6D3D1;font-size:22px;"></i>
+          </div>
+        </div>
+
+        <div style="margin-top:160px;">
+          <button class="btn-primary" onclick="goToStep('step-login')">
+            Continue <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: LOGIN & OTP -->
+      <div id="step-login" class="onboarding-step" style="padding: 12px 18px 40px 18px;">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToStep('step-lang')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag green"><i class="fa-solid fa-shield-halved"></i> 100% Free Signup</span>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:4px;">Welcome to Kanpur Karigar</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;">Log in or create a free account with your mobile number</p>
+
+        <div class="input-group">
+          <label class="input-label">Mobile Number</label>
+          <div style="display:flex;align-items:center;background:#FFF;border:1.5px solid #E7E5E4;border-radius:12px;padding:11px 14px;">
+            <span style="font-weight:700;color:#44403C;padding-right:10px;border-right:1px solid #D6D3D1;margin-right:10px;">+91</span>
+            <input type="tel" value="98390 12345" style="border:none;background:transparent;font-size:15px;font-weight:700;width:100%;outline:none;">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Enter 4-Digit OTP Code</label>
+          <div class="otp-boxes">
+            <div class="otp-box filled">7</div>
+            <div class="otp-box filled">4</div>
+            <div class="otp-box filled">9</div>
+            <div class="otp-box">1</div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="goToStep('step-role')">
+          Verify OTP & Continue <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+        <div style="text-align:center;margin:18px 0;font-size:12px;color:#A8A29E;">
+          <span>— or quick login with —</span>
+        </div>
+
+        <a class="btn-whatsapp" href="employer-dashboard.html">
+          <i class="fa-brands fa-whatsapp" style="font-size:18px;"></i> Continue with WhatsApp
+        </a>
+      </div>
+
+      <!-- STEP 4: ROLE SELECT -->
+      <div id="step-role" class="onboarding-step" style="padding: 12px 18px 40px 18px;">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToStep('step-login')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag primary">Step 2 of 3</span>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:4px;">Select Account Type</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:24px;">How would you like to use Kanpur Karigar?</p>
+
+        <a class="card" href="employer-reg.html" style="text-decoration:none;display:block;border:2px solid var(--primary);background:var(--primary-light);margin-bottom:16px;">
+          <div style="display:flex;gap:14px;align-items:center;">
+            <div style="width:56px;height:56px;border-radius:16px;background:#FFF;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:24px;">
+              <i class="fa-solid fa-shop"></i>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:17px;font-weight:800;color:var(--primary-dark);">I am an Employer (Business)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.4;">I run a Sweet Shop, Dhaba, Restaurant, or Catering business and need artisans</div>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="karigar-reg.html" style="text-decoration:none;display:block;">
+          <div style="display:flex;gap:14px;align-items:center;">
+            <div style="width:56px;height:56px;border-radius:16px;background:#F5F5F4;display:flex;align-items:center;justify-content:center;color:#44403C;font-size:24px;">
+              <i class="fa-solid fa-hat-chef"></i>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:17px;font-weight:800;">I am a Karigar (Artisan / Worker)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.4;">I am a Halwai, Tandoor Master, Bawarchi, or Chaat Cook looking for orders and jobs</div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    function goToStep(stepId) {
+      document.querySelectorAll('.onboarding-step').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(stepId);
+      if (target) {
+        target.classList.add('active');
+        document.querySelector('.screen-viewport').scrollTop = 0;
+      }
+      const statusBar = document.getElementById('onboarding-statusbar');
+      const time = statusBar.querySelector('.status-bar-time');
+      const icons = statusBar.querySelector('.status-icons');
+      if (stepId === 'step-splash') {
+        time.style.color = '#FFF';
+        icons.style.color = '#FFF';
+      } else {
+        time.style.color = '#1C1917';
+        icons.style.color = '#1C1917';
+      }
+    }
+  </script>
+</body>
+</html>
+

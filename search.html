@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanpur Karigar — Search Karigars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="device-wrapper">
+    <a href="index.html" class="hub-pill"><i class="fa-solid fa-arrow-left"></i> All Screens</a>
+    <div class="notch"><div class="lens"></div></div>
+
+    <div class="screen-viewport">
+      <div class="status-bar">
+        <span class="status-bar-time">9:41</span>
+        <div class="status-icons">
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <div class="screen-back-header">
+          <a class="btn-back" href="employer-dashboard.html"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+          <span class="tag green">34 Available Now</span>
+        </div>
+
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass" style="color:#A8A29E;"></i>
+          <input type="text" placeholder="Search by craft or dish (e.g. Halwai, Tandoor)">
+          <i class="fa-solid fa-microphone" style="color:var(--primary);cursor:pointer;" onclick="showToast('🎙️ Listening in Kanpur Hindi / English...')"></i>
+        </div>
+
+        <div class="category-scroll">
+          <div class="cat-pill active" onclick="filterCategory(this)">All Artisans</div>
+          <div class="cat-pill" onclick="filterCategory(this)">Halwai</div>
+          <div class="cat-pill" onclick="filterCategory(this)">Bawarchi</div>
+          <div class="cat-pill" onclick="filterCategory(this)">Chaat Master</div>
+          <div class="cat-pill" onclick="filterCategory(this)">Tandoor Cook</div>
+        </div>
+
+        <!-- Karigar 1 -->
+        <div class="card">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+            <div class="karigar-avatar">RK</div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:16px;">Ramesh Kumar</b>
+                <span class="tag green"><i class="fa-solid fa-check"></i> Verified</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">
+                Halwai • 8 Yrs Experience • Govind Nagar (2.4 km)
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;">
+            <span class="tag primary">Desi Ghee Jalebi</span>
+            <span class="tag primary">Gulab Jamun</span>
+            <span class="tag primary">Khoya Sweets</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid #F5F5F4;">
+            <div>
+              <div style="font-size:11px;color:var(--text-secondary);">Expected Wage:</div>
+              <div style="font-size:15px;font-weight:800;color:var(--primary-dark);">₹18,000 / Month</div>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <a class="btn-primary" href="karigar-profile.html" style="padding:8px 14px;font-size:12px;width:auto;">
+                View Profile
+              </a>
+              <button class="btn-outline" style="padding:8px 12px;font-size:12px;width:auto;" onclick="showToast('⭐ Ramesh Kumar added to your shortlist!')">
+                Shortlist
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Karigar 2 -->
+        <div class="card">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+            <div class="karigar-avatar" style="background:#DCFCE7;color:var(--accent-green);">SY</div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:16px;">Suresh Yadav</b>
+                <span class="tag green"><i class="fa-solid fa-check"></i> Verified</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">
+                Halwai & Chaat Master • 5 Yrs Exp • Kidwai Nagar (1.1 km)
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;">
+            <span class="tag primary">Kaju Katli</span>
+            <span class="tag primary">Special Aloo Tikki Chaat</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid #F5F5F4;">
+            <div>
+              <div style="font-size:11px;color:var(--text-secondary);">Expected Wage:</div>
+              <div style="font-size:15px;font-weight:800;color:var(--primary-dark);">₹16,000 / Month</div>
+            </div>
+            <a class="btn-primary" href="karigar-profile.html" style="padding:8px 14px;font-size:12px;width:auto;">
+              View Profile
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+      <a class="nav-item" href="employer-dashboard.html">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      <a class="nav-item active" href="search.html">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Search</span>
+      </a>
+      <a class="nav-item" href="post-job.html">
+        <i class="fa-solid fa-circle-plus" style="font-size:24px;color:var(--primary);"></i>
+        <span>Post Job</span>
+      </a>
+      <a class="nav-item" href="notifications.html">
+        <i class="fa-solid fa-bell"></i>
+        <span>Alerts</span>
+      </a>
+      <a class="nav-item" href="profile.html">
+        <i class="fa-solid fa-user"></i>
+        <span>Account</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    function filterCategory(el) {
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      showToast(`Filtered: ${el.textContent}`);
+    }
+  </script>
+</body>
+</html>
+

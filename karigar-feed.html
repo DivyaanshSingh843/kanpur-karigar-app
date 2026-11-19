@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanpur Karigar — Karigar Job Feed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="device-wrapper">
+    <a href="index.html" class="hub-pill"><i class="fa-solid fa-arrow-left"></i> All Screens</a>
+    <div class="notch"><div class="lens"></div></div>
+
+    <div class="screen-viewport">
+      <div class="status-bar">
+        <span class="status-bar-time">9:41</span>
+        <div class="status-icons">
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
+        </div>
+      </div>
+
+      <div class="app-screen">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div>
+            <div style="font-size:12px;color:var(--text-secondary);">Welcome,</div>
+            <div style="font-size:18px;font-weight:800;">Suresh Karigar</div>
+          </div>
+          <span class="tag green"><i class="fa-solid fa-circle"></i> Available for Work</span>
+        </div>
+
+        <!-- Monthly Earnings -->
+        <div class="card" style="background:linear-gradient(135deg, #1C1917 0%, #292524 100%);color:#FFF;">
+          <div style="font-size:12px;opacity:0.8;">Earnings This Month (October)</div>
+          <div style="font-size:26px;font-weight:800;color:#FDE047;margin:4px 0;">₹24,800</div>
+          <div style="font-size:11px;opacity:0.85;">14 Catering Gigs Completed • 4.9 ⭐ Rating</div>
+        </div>
+
+        <h3 style="font-size:15px;font-weight:800;margin:14px 0 8px 0;">Nearby Open Gigs in Kanpur</h3>
+
+        <!-- Gig 1 -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <span class="tag primary">Wedding Order • 3 Days</span>
+              <div style="font-size:16px;font-weight:800;margin-top:6px;">Sharma Sweets & Caterers</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Kidwai Nagar, Kanpur (2.4 km)</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:16px;font-weight:800;color:var(--primary-dark);">₹1,800</div>
+              <div style="font-size:11px;color:var(--text-secondary);">Per Day</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#16A34A;font-weight:700;"><i class="fa-solid fa-bowl-food"></i> Meals Included</span>
+            <button class="btn-primary" style="padding:8px 14px;font-size:12px;width:auto;" onclick="showToast('✅ Application submitted! Sharma Sweets notified.'); setTimeout(() => location.href='whatsapp-mitra.html', 1400);">
+              Quick Apply <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Gig 2 -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <span class="tag">Full Time Job</span>
+              <div style="font-size:16px;font-weight:800;margin-top:6px;">Royal Dhaba & Restaurant</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Govind Nagar, Kanpur (3.8 km)</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:16px;font-weight:800;color:var(--primary-dark);">₹16,000</div>
+              <div style="font-size:11px;color:var(--text-secondary);">Per Month</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#16A34A;font-weight:700;"><i class="fa-solid fa-clock"></i> 9 Hr Shift</span>
+            <button class="btn-primary" style="padding:8px 14px;font-size:12px;width:auto;" onclick="showToast('✅ Applied for Royal Dhaba!')">
+              Apply Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+      <a class="nav-item active" href="karigar-feed.html">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Gigs</span>
+      </a>
+      <a class="nav-item" href="notifications.html">
+        <i class="fa-solid fa-bell"></i>
+        <span>Alerts</span>
+      </a>
+      <a class="nav-item" href="whatsapp-mitra.html">
+        <i class="fa-brands fa-whatsapp" style="font-size:20px;color:#25D366;"></i>
+        <span>Mitra</span>
+      </a>
+      <a class="nav-item" href="profile.html">
+        <i class="fa-solid fa-user"></i>
+        <span>Account</span>
+      </a>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+

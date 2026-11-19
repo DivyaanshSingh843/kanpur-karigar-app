@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanpur Karigar — Karigar Registration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="device-wrapper">
+    <a href="index.html" class="hub-pill"><i class="fa-solid fa-arrow-left"></i> All Screens</a>
+    <div class="notch"><div class="lens"></div></div>
+
+    <div class="screen-viewport">
+      <div class="status-bar">
+        <span class="status-bar-time">9:41</span>
+        <div class="status-icons">
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
+        </div>
+      </div>
+
+      <div class="app-screen" style="padding-bottom:40px;">
+        <div class="screen-back-header">
+          <a class="btn-back" href="onboarding.html"><i class="fa-solid fa-arrow-left"></i> Back</a>
+          <span class="tag green">Free Worker Profile</span>
+        </div>
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Karigar Registration</h2>
+        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:14px;">Create your profile to receive catering orders and restaurant jobs</p>
+
+        <div class="card">
+          <div style="text-align:center;margin-bottom:14px;">
+            <div style="width:70px;height:70px;border-radius:50%;background:#F5F5F4;border:2px dashed #D6D3D1;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;" onclick="showToast('📷 Camera / Gallery opened')">
+              <i class="fa-solid fa-camera" style="font-size:22px;color:#A8A29E;"></i>
+            </div>
+            <span style="font-size:11px;color:var(--primary);font-weight:700;margin-top:6px;display:block;">Upload Passport Photo or Selfie</span>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Full Name</label>
+            <input type="text" class="input-field" value="Suresh Kumar Kashyap">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Primary Craft Specialization</label>
+            <select class="input-field" style="background:#FFF;">
+              <option selected>Halwai (Sweets & Snacks Specialist)</option>
+              <option>Bawarchi (Curries, Rice & Gravies)</option>
+              <option>Tandoor & Roti Master</option>
+              <option>Chaat & Fast Food Specialist</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Years of Experience</label>
+            <input type="number" class="input-field" value="5">
+          </div>
+
+          <div class="input-group" style="margin-bottom:0;">
+            <label class="input-label">Expected Monthly Wage (₹)</label>
+            <input type="text" class="input-field" value="₹16,000 / Month">
+          </div>
+        </div>
+
+        <a class="btn-primary" href="karigar-feed.html">
+          Complete Profile & Start Working <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
+
