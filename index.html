@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kanpur Karigar — कानपुर का अपना Hiring Platform</title>
+<title>Kanpur Karigar — Kanpur's Local Artisan Hiring Platform</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
   :root {
@@ -21,7 +21,8 @@
     --text-primary: #1C1917;
     --text-secondary: #78716C;
     --border-light: #E7E5E4;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -33,11 +34,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 24px 16px;
+    justify-content: flex-start;
+    padding: 24px 16px 48px 16px;
     color: var(--text-primary);
   }
 
+  /* Presentation Header */
   .web-header {
     margin-bottom: 16px;
     text-align: center;
@@ -52,7 +54,7 @@
     padding: 6px 14px;
     border-radius: 999px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--primary-dark);
     display: inline-flex;
     align-items: center;
@@ -68,39 +70,47 @@
   .web-header p {
     font-size: 14px;
     color: #78716C;
-    max-width: 520px;
+    max-width: 580px;
+    line-height: 1.45;
   }
 
+  /* Screen Switcher Bar */
   .screen-selector-bar {
     background: #FFFFFF;
     border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    padding: 8px 16px;
+    border-radius: 14px;
+    padding: 10px 18px;
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     box-shadow: 0 10px 25px -5px rgba(0,0,0,0.06);
     flex-wrap: wrap;
     justify-content: center;
   }
   .screen-selector-bar span {
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     color: #44403C;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
   .screen-select {
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: 8px;
-    border: 1px solid #D6D3D1;
+    border: 1.5px solid #D6D3D1;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     background: #FAFAF9;
     color: var(--primary-dark);
     cursor: pointer;
     outline: none;
+    transition: all 0.2s;
   }
+  .screen-select:focus { border-color: var(--primary); }
 
+  /* Device Mockup Shell */
   .device-wrapper {
     position: relative;
     width: 390px;
@@ -115,13 +125,14 @@
       inset 0 0 0 5px #222;
   }
 
+  /* Dynamic Island Notch */
   .notch {
     position: absolute;
     top: 22px;
     left: 50%;
     transform: translateX(-50%);
     width: 120px;
-    height: 32px;
+    height: 30px;
     background: #000;
     border-radius: 20px;
     z-index: 100;
@@ -138,6 +149,7 @@
     border: 1px solid #222;
   }
 
+  /* Device Screen Area */
   .screen-viewport {
     position: relative;
     width: 100%;
@@ -150,6 +162,7 @@
   }
   .screen-viewport::-webkit-scrollbar { display: none; }
 
+  /* Status Bar */
   .status-bar {
     position: sticky;
     top: 0;
@@ -167,26 +180,45 @@
   }
   .status-icons { display: flex; gap: 6px; font-size: 11px; }
 
+  /* =====================================================
+     APP SCREEN BASE RULES:
+     EVERY screen is DISPLAY: NONE by default.
+     ONLY .app-screen.active is displayed!
+     ===================================================== */
   .app-screen {
-    display: none;
+    display: none !important;
     min-height: 100%;
     padding: 12px 18px 90px 18px;
     animation: fadeIn 0.2s ease-out;
   }
-  .app-screen.active { display: block; }
+  .app-screen.active {
+    display: block !important;
+  }
+  /* Splash screen uses flex layout when active */
+  #screen-splash.active {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(160deg, #F05A28 0%, #D44211 50%, #992905 100%);
+    color: #FFF;
+    padding: 70px 24px 36px 24px;
+  }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Persistent Bottom Navigation */
   .bottom-nav {
     position: absolute;
     bottom: 12px;
     left: 12px;
     right: 12px;
     height: 68px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(16px);
     border-top: 1px solid rgba(0,0,0,0.06);
     border-radius: 0 0 42px 42px;
@@ -195,6 +227,7 @@
     align-items: center;
     padding-bottom: 8px;
     z-index: 80;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.03);
   }
   .nav-item {
     display: flex;
@@ -203,12 +236,14 @@
     gap: 3px;
     color: #A8A29E;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
+    transition: color 0.15s;
   }
-  .nav-item.active { color: var(--primary); }
+  .nav-item:hover, .nav-item.active { color: var(--primary); }
   .nav-item i { font-size: 18px; }
 
+  /* Standard UI Elements */
   .btn-primary {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: #FFF;
@@ -224,8 +259,26 @@
     gap: 8px;
     cursor: pointer;
     box-shadow: 0 8px 18px -4px rgba(240, 90, 40, 0.35);
+    transition: all 0.15s;
   }
   .btn-primary:active { transform: scale(0.98); }
+
+  .btn-outline {
+    background: #FFF;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    border-radius: 14px;
+    padding: 13px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .btn-outline:active { transform: scale(0.98); }
 
   .btn-whatsapp {
     background: #25D366;
@@ -258,7 +311,7 @@
     align-items: center;
     gap: 4px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     padding: 4px 10px;
     border-radius: 999px;
     background: #F5F5F4;
@@ -267,16 +320,32 @@
   .tag.primary { background: var(--primary-light); color: var(--primary-dark); }
   .tag.green { background: var(--accent-green-light); color: var(--accent-green); }
 
-  #screen-splash {
-    background: linear-gradient(160deg, #F05A28 0%, #D44211 50%, #992905 100%);
-    color: #FFF;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    padding: 80px 24px 40px 24px;
+  /* Input wrapper */
+  .input-group {
+    margin-bottom: 14px;
   }
+  .input-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #44403C;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .input-field {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #E7E5E4;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1C1917;
+    background: #FFF;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .input-field:focus { border-color: var(--primary); }
+
+  /* Splash Logo */
   .splash-logo {
     width: 100px;
     height: 100px;
@@ -290,20 +359,9 @@
   }
   .splash-logo i { font-size: 50px; color: var(--primary); }
   .splash-title { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
-  .splash-sub { font-size: 16px; opacity: 0.95; margin-top: 6px; font-family: 'Tiro Devanagari Hindi', serif; }
+  .splash-sub { font-size: 16px; opacity: 0.95; margin-top: 6px; font-weight: 600; }
 
-  .phone-input-wrap {
-    display: flex;
-    align-items: center;
-    background: #F5F5F4;
-    border: 1px solid #E7E5E4;
-    border-radius: 14px;
-    padding: 12px 14px;
-    margin: 16px 0;
-  }
-  .phone-input-wrap span { font-weight: 700; color: #44403C; padding-right: 10px; border-right: 1px solid #D6D3D1; margin-right: 10px; }
-  .phone-input-wrap input { border: none; background: transparent; font-size: 16px; font-weight: 600; width: 100%; outline: none; }
-
+  /* OTP Boxes */
   .otp-boxes {
     display: flex;
     justify-content: space-between;
@@ -326,6 +384,7 @@
   }
   .otp-box.filled { border-color: var(--primary); background: var(--primary-light); }
 
+  /* Stat Grid */
   .stat-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -341,6 +400,7 @@
   .stat-num { font-size: 26px; font-weight: 800; color: var(--primary-dark); }
   .stat-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-top: 2px; }
 
+  /* SOS Banner */
   .sos-banner {
     background: linear-gradient(135deg, #FFF1EC 0%, #FFE4DA 100%);
     border: 1px solid #FFD3C2;
@@ -349,18 +409,19 @@
     margin-bottom: 16px;
   }
 
+  /* Search & Category Pills */
   .search-bar {
     display: flex;
     align-items: center;
     background: #FFF;
-    border: 1px solid var(--border-light);
+    border: 1.5px solid var(--border-light);
     border-radius: 14px;
     padding: 10px 14px;
     gap: 10px;
     margin-bottom: 12px;
     box-shadow: var(--shadow-sm);
   }
-  .search-bar input { border: none; outline: none; width: 100%; font-size: 14px; }
+  .search-bar input { border: none; outline: none; width: 100%; font-size: 14px; font-weight: 600; }
   .category-scroll {
     display: flex;
     gap: 8px;
@@ -374,7 +435,7 @@
     padding: 8px 14px;
     border-radius: 999px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     background: #FFF;
     border: 1px solid var(--border-light);
     cursor: pointer;
@@ -385,15 +446,7 @@
     border-color: var(--primary);
   }
 
-  .karigar-card {
-    background: #FFF;
-    border: 1px solid var(--border-light);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: var(--shadow-sm);
-  }
-  .karigar-header { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+  /* Karigar Avatar */
   .karigar-avatar {
     width: 52px;
     height: 52px;
@@ -403,44 +456,67 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  /* Back Button Header */
+  .screen-back-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
     font-weight: 700;
+    color: var(--primary);
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 </style>
 </head>
 <body>
 
+  <!-- Web Showcase Header -->
   <div class="web-header">
     <div class="badge"><i class="fa-solid fa-location-dot"></i> Kanpur Hyperlocal Artisan Network</div>
     <h1>Kanpur Karigar — Interactive Prototype</h1>
-    <p>Complete 15 screens built from the wireframes PDF into an interactive mobile device container.</p>
+    <p>Complete 15 screens built from the wireframe specs with 100% English interface and full interactive wiring between every button and screen.</p>
   </div>
 
+  <!-- Screen Selector Bar -->
   <div class="screen-selector-bar">
-    <span><i class="fa-solid fa-mobile-screen"></i> Switch Screen:</span>
+    <span><i class="fa-solid fa-mobile-screen"></i> Jump to Screen:</span>
     <select id="screenSelect" class="screen-select" onchange="goToScreen(this.value)">
-      <option value="screen-splash">1. Splash Screen (आगमन)</option>
-      <option value="screen-lang">2. Language Selection (भाषा चुनें)</option>
-      <option value="screen-login">3. Login & OTP (लॉगिन)</option>
-      <option value="screen-role">4. Role Switcher (भूमिका)</option>
-      <option value="screen-employer-reg">5. Employer Registration (मालिक पंजीयन)</option>
-      <option value="screen-dashboard" selected>6. Employer Dashboard (मालिक डैशबोर्ड)</option>
-      <option value="screen-post-job">7. Post Requirement (मांग डालें)</option>
-      <option value="screen-search">8. Search Karigars (कारीगर खोजें)</option>
-      <option value="screen-karigar-profile">9. Karigar Detail Profile (कारीगर विवरण)</option>
-      <option value="screen-karigar-reg">10. Karigar Registration (कारीगर पंजीयन)</option>
-      <option value="screen-karigar-feed">11. Karigar Job Feed (काम की खोज)</option>
-      <option value="screen-notifications">12. Notifications (सूचनाएं)</option>
-      <option value="screen-whatsapp-chat">13. WhatsApp Broadcast (व्हाट्सएप मित्र)</option>
-      <option value="screen-my-profile">14. My Profile & Settings (मेरी प्रोफाइल)</option>
-      <option value="screen-admin-panel">15. Admin Operations Portal (व्यवस्थापक)</option>
+      <option value="screen-splash" selected>1. Splash Screen</option>
+      <option value="screen-lang">2. Language Selection</option>
+      <option value="screen-login">3. Login & OTP Verification</option>
+      <option value="screen-role">4. Role Selection (Employer / Karigar)</option>
+      <option value="screen-employer-reg">5. Employer Registration</option>
+      <option value="screen-dashboard">6. Employer Home Dashboard</option>
+      <option value="screen-post-job">7. Post Requirement (New Job)</option>
+      <option value="screen-search">8. Search Karigars</option>
+      <option value="screen-karigar-profile">9. Karigar Detailed Profile</option>
+      <option value="screen-karigar-reg">10. Karigar Worker Registration</option>
+      <option value="screen-karigar-feed">11. Karigar Job Feed (Worker View)</option>
+      <option value="screen-notifications">12. Notifications & Alerts</option>
+      <option value="screen-whatsapp-chat">13. WhatsApp Mitra Broadcast</option>
+      <option value="screen-my-profile">14. My Account & Settings</option>
+      <option value="screen-admin-panel">15. Admin Dispatch Portal</option>
     </select>
   </div>
 
+  <!-- Device Frame -->
   <div class="device-wrapper">
     <div class="notch"><div class="lens"></div></div>
 
     <div class="screen-viewport">
+      <!-- Phone Status Bar -->
       <div class="status-bar">
         <span>09:41</span>
         <div class="status-icons">
@@ -450,349 +526,786 @@
         </div>
       </div>
 
-      <!-- 1. SPLASH -->
-      <div id="screen-splash" class="app-screen">
+      <!-- ================= SCREEN 1: SPLASH ================= -->
+      <div id="screen-splash" class="app-screen active">
         <div></div>
         <div>
           <div class="splash-logo"><i class="fa-solid fa-utensils"></i></div>
           <div class="splash-title">Kanpur Karigar</div>
-          <div class="splash-sub">कारीगर भी अपना, काम भी अपना</div>
-          <p style="font-size:12px;opacity:0.8;margin-top:10px;">Kanpur का अपना Food Artisan Hiring Platform</p>
+          <div class="splash-sub">Artisan Trust • Local Trade</div>
+          <p style="font-size:13px;opacity:0.9;margin-top:10px;">Kanpur's Own Food Artisan Hiring Platform</p>
+          <div style="margin-top:16px;display:flex;justify-content:center;gap:8px;">
+            <span class="tag" style="background:rgba(255,255,255,0.25);color:#FFF;">100% Verified</span>
+            <span class="tag" style="background:rgba(255,255,255,0.25);color:#FFF;">Instant Match</span>
+          </div>
         </div>
         <div style="width:100%;">
           <button class="btn-primary" style="background:#FFF;color:var(--primary);" onclick="goToScreen('screen-lang')">
-            Get Started • शुरू करें <i class="fa-solid fa-arrow-right"></i>
+            Get Started <i class="fa-solid fa-arrow-right"></i>
           </button>
-          <p style="font-size:11px;opacity:0.75;margin-top:12px;">गुमटी नं. 5 • स्वरूप नगर • सिविल लाइंस • कल्याणपुर</p>
+          <p style="font-size:11px;opacity:0.75;margin-top:12px;">Kidwai Nagar • Swaroop Nagar • Gumti No. 5 • Civil Lines</p>
         </div>
       </div>
 
-      <!-- 2. LANGUAGE -->
+      <!-- ================= SCREEN 2: LANGUAGE ================= -->
       <div id="screen-lang" class="app-screen">
-        <h2 style="font-size:22px;font-weight:800;margin:16px 0 6px 0;">अपनी भाषा चुनें</h2>
-        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:24px;">Choose your preferred language</p>
-        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;" onclick="selectLang(this)">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-splash')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag primary">Step 1 of 3</span>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:6px;">Choose Language</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;">Select your preferred app browsing language</p>
+
+        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
-              <div style="font-size:17px;font-weight:700;color:var(--primary-dark);">हिन्दी (अनुशंसित)</div>
-              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">आसानी से बोलकर या पढ़कर समझें</div>
+              <div style="font-size:17px;font-weight:800;color:var(--primary-dark);">English (Selected)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Standard app experience in English</div>
             </div>
-            <i class="fa-solid fa-circle-check" style="color:var(--primary);font-size:20px;"></i>
+            <i class="fa-solid fa-circle-check" style="color:var(--primary);font-size:22px;"></i>
           </div>
         </div>
-        <div class="card" style="cursor:pointer;" onclick="selectLang(this)">
+
+        <div class="card" style="cursor:pointer;opacity:0.75;">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
-              <div style="font-size:17px;font-weight:700;">English</div>
-              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Browse in professional English</div>
+              <div style="font-size:17px;font-weight:700;">Hindi (हिन्दी)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Regional language audio assistance</div>
             </div>
-            <i class="fa-regular fa-circle" style="color:#D6D3D1;font-size:20px;"></i>
+            <i class="fa-regular fa-circle" style="color:#D6D3D1;font-size:22px;"></i>
           </div>
         </div>
-        <div style="margin-top:140px;">
+
+        <div style="margin-top:160px;">
           <button class="btn-primary" onclick="goToScreen('screen-login')">
-            आगे बढ़ें / Continue <i class="fa-solid fa-arrow-right"></i>
+            Continue <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
       </div>
 
-      <!-- 3. LOGIN & OTP -->
+      <!-- ================= SCREEN 3: LOGIN ================= -->
       <div id="screen-login" class="app-screen">
-        <h2 style="font-size:22px;font-weight:800;margin:16px 0 4px 0;">नमस्ते! लॉगिन या रजिस्टर करें</h2>
-        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;">Free access to all food artisans in Kanpur</p>
-        <div class="phone-input-wrap">
-          <span>+91</span>
-          <input type="tel" value="98390 12345" placeholder="मोबाइल नंबर डालें">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-lang')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag green"><i class="fa-solid fa-shield-halved"></i> 100% Free Signup</span>
         </div>
-        <p style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;">4-Digit OTP डालें (Verification Code)</p>
-        <div class="otp-boxes">
-          <div class="otp-box filled">7</div>
-          <div class="otp-box filled">4</div>
-          <div class="otp-box filled">9</div>
-          <div class="otp-box">1</div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:4px;">Welcome to Kanpur Karigar</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;">Log in or create a free account with your mobile number</p>
+
+        <div class="input-group">
+          <label class="input-label">Mobile Number</label>
+          <div style="display:flex;align-items:center;background:#FFF;border:1.5px solid #E7E5E4;border-radius:12px;padding:11px 14px;">
+            <span style="font-weight:700;color:#44403C;padding-right:10px;border-right:1px solid #D6D3D1;margin-right:10px;">+91</span>
+            <input type="tel" value="98390 12345" style="border:none;background:transparent;font-size:15px;font-weight:700;width:100%;outline:none;">
+          </div>
         </div>
-        <button class="btn-primary" style="margin-top:12px;" onclick="goToScreen('screen-role')">
-          Verify करें & आगे बढ़ें <i class="fa-solid fa-arrow-right"></i>
+
+        <div class="input-group">
+          <label class="input-label">Enter 4-Digit OTP Code</label>
+          <div class="otp-boxes">
+            <div class="otp-box filled">7</div>
+            <div class="otp-box filled">4</div>
+            <div class="otp-box filled">9</div>
+            <div class="otp-box">1</div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="goToScreen('screen-role')">
+          Verify OTP & Continue <i class="fa-solid fa-arrow-right"></i>
         </button>
+
         <div style="text-align:center;margin:18px 0;font-size:12px;color:#A8A29E;">
-          <span>— या व्हाट्सएप द्वारा जुड़ें —</span>
+          <span>— or quick login with —</span>
         </div>
+
         <button class="btn-whatsapp" onclick="goToScreen('screen-dashboard')">
           <i class="fa-brands fa-whatsapp" style="font-size:18px;"></i> Continue with WhatsApp
         </button>
       </div>
 
-      <!-- 4. ROLE -->
+      <!-- ================= SCREEN 4: ROLE SELECT ================= -->
       <div id="screen-role" class="app-screen">
-        <h2 style="font-size:22px;font-weight:800;margin:16px 0 4px 0;">आप किस रूप में जुड़ना चाहते हैं?</h2>
-        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:24px;">Select your account type</p>
-        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;" onclick="goToScreen('screen-employer-reg')">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-login')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag primary">Step 2 of 3</span>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:4px;">Select Account Type</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:24px;">How would you like to use Kanpur Karigar?</p>
+
+        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;margin-bottom:16px;" onclick="goToScreen('screen-employer-reg')">
           <div style="display:flex;gap:14px;align-items:center;">
-            <div style="width:54px;height:54px;border-radius:14px;background:#FFF;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:24px;">
+            <div style="width:56px;height:56px;border-radius:16px;background:#FFF;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:24px;">
               <i class="fa-solid fa-shop"></i>
             </div>
-            <div>
-              <div style="font-size:17px;font-weight:800;color:var(--primary-dark);">मैं मालिक हूँ (Employer)</div>
-              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">मिष्ठान भंडार, ढाबा, रेस्टोरेंट या कैटरिंग के लिए कारीगर चाहिए</div>
+            <div style="flex:1;">
+              <div style="font-size:17px;font-weight:800;color:var(--primary-dark);">I am an Employer (Business)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.4;">I run a Sweet Shop, Dhaba, Restaurant, or Catering business and need artisans</div>
             </div>
           </div>
         </div>
+
         <div class="card" style="cursor:pointer;" onclick="goToScreen('screen-karigar-reg')">
           <div style="display:flex;gap:14px;align-items:center;">
-            <div style="width:54px;height:54px;border-radius:14px;background:#F5F5F4;display:flex;align-items:center;justify-content:center;color:#44403C;font-size:24px;">
+            <div style="width:56px;height:56px;border-radius:16px;background:#F5F5F4;display:flex;align-items:center;justify-content:center;color:#44403C;font-size:24px;">
               <i class="fa-solid fa-hat-chef"></i>
             </div>
-            <div>
-              <div style="font-size:17px;font-weight:800;">मैं कारीगर हूँ (Karigar)</div>
-              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">हलवाई, तंदूर, चाट या चाइनीज कुक - काम चाहिए</div>
+            <div style="flex:1;">
+              <div style="font-size:17px;font-weight:800;">I am a Karigar (Artisan / Worker)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.4;">I am a Halwai, Tandoor Master, Bawarchi, or Chaat Cook looking for orders and jobs</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 5. EMPLOYER REG -->
+      <!-- ================= SCREEN 5: EMPLOYER REG ================= -->
       <div id="screen-employer-reg" class="app-screen">
-        <h2 style="font-size:20px;font-weight:800;margin:12px 0 4px 0;">प्रतिष्ठान का विवरण</h2>
-        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Step 1 of 2 • Business Profile</p>
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-role')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag primary">Step 3 of 3</span>
+        </div>
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Register Your Business</h2>
+        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Complete your profile to post jobs and search verified talent</p>
+
         <div class="card">
-          <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">मालिक का नाम</label>
-          <input type="text" value="राजेश शर्मा (Rajesh Sharma)" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;font-size:14px;outline:none;">
-          <label style="font-size:12px;font-weight:700;display:block;margin:12px 0 6px 0;">दुकान / बिजनेस का नाम</label>
-          <input type="text" value="Sharma Sweets & Caterers" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;font-size:14px;outline:none;">
-          <label style="font-size:12px;font-weight:700;display:block;margin:12px 0 6px 0;">व्यापार का प्रकार</label>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;">
-            <span class="tag primary">Sweet Shop</span>
-            <span class="tag">Catering</span>
-            <span class="tag">Dhaba</span>
-            <span class="tag">Restaurant</span>
+          <div class="input-group">
+            <label class="input-label">Owner / Manager Full Name</label>
+            <input type="text" class="input-field" value="Rajesh Sharma">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Business / Shop Name</label>
+            <input type="text" class="input-field" value="Sharma Sweets & Caterers">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Business Category</label>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+              <span class="tag primary">Sweet Shop</span>
+              <span class="tag">Catering</span>
+              <span class="tag">Dhaba</span>
+              <span class="tag">Restaurant</span>
+              <span class="tag">Food Cart (Thela)</span>
+              <span class="tag">Cloud Kitchen</span>
+            </div>
+          </div>
+
+          <div class="input-group" style="margin-bottom:0;">
+            <label class="input-label">Operating Locality in Kanpur</label>
+            <select class="input-field" style="background:#FFF;">
+              <option selected>Kidwai Nagar, Kanpur</option>
+              <option>Gumti No. 5, Kanpur</option>
+              <option>Swaroop Nagar, Kanpur</option>
+              <option>Govind Nagar, Kanpur</option>
+              <option>Civil Lines, Kanpur</option>
+            </select>
           </div>
         </div>
-        <button class="btn-primary" onclick="goToScreen('screen-dashboard')">Profile बनाएँ <i class="fa-solid fa-arrow-right"></i></button>
+
+        <button class="btn-primary" onclick="goToScreen('screen-dashboard')">
+          Create Business Profile <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
 
-      <!-- 6. EMPLOYER DASHBOARD -->
-      <div id="screen-dashboard" class="app-screen active">
+      <!-- ================= SCREEN 6: EMPLOYER DASHBOARD ================= -->
+      <div id="screen-dashboard" class="app-screen">
         <div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0 16px 0;">
           <div>
-            <div style="font-size:13px;color:var(--text-secondary);font-weight:600;">नमस्ते,</div>
+            <div style="font-size:13px;color:var(--text-secondary);font-weight:600;">Welcome back,</div>
             <div style="font-size:20px;font-weight:800;">Sharma Sweets 👋</div>
           </div>
           <span class="tag green"><i class="fa-solid fa-circle-check"></i> Verified Owner</span>
         </div>
+
+        <!-- 4 Metrics Grid -->
         <div class="stat-grid">
-          <div class="stat-card"><div class="stat-num">03</div><div class="stat-label">Active Demands</div></div>
-          <div class="stat-card"><div class="stat-num">14</div><div class="stat-label">Applications</div></div>
-          <div class="stat-card"><div class="stat-num">02</div><div class="stat-label">On Duty</div></div>
-          <div class="stat-card"><div class="stat-num">₹4,200</div><div class="stat-label">Month Spend</div></div>
+          <div class="stat-card" onclick="goToScreen('screen-post-job')" style="cursor:pointer;">
+            <div class="stat-num">03</div>
+            <div class="stat-label">Active Demands</div>
+          </div>
+          <div class="stat-card" onclick="goToScreen('screen-notifications')" style="cursor:pointer;">
+            <div class="stat-num">14</div>
+            <div class="stat-label">Applicant Karigars</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">02</div>
+            <div class="stat-label">On Duty Today</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">₹4,200</div>
+            <div class="stat-label">Total Spent</div>
+          </div>
         </div>
+
+        <!-- SOS Urgent Booking Banner -->
         <div class="sos-banner">
-          <div style="font-size:13px;font-weight:800;color:#992905;">🚨 URGENT SOS (30 Min Match)</div>
-          <div style="font-size:15px;font-weight:800;color:#992905;margin:4px 0;">आज रात के लिए तत्काल कारीगर चाहिए?</div>
-          <button class="btn-primary" style="padding:8px 12px;font-size:12px;width:auto;margin-top:6px;" onclick="goToScreen('screen-search')">
-            Book Instant • तत्काल खोजें <i class="fa-solid fa-bolt"></i>
+          <span class="tag primary" style="background:#FFE0D3;color:var(--primary-dark);font-weight:800;">🚨 EMERGENCY SOS</span>
+          <div style="font-size:15px;font-weight:800;color:#992905;margin:6px 0 4px 0;">Need an urgent replacement tonight?</div>
+          <p style="font-size:12px;color:#78350F;margin-bottom:10px;">Dispatch verified halwais and cooks within 30 minutes in Kanpur</p>
+          <button class="btn-primary" style="padding:9px 16px;font-size:13px;width:auto;" onclick="goToScreen('screen-search')">
+            Book Instant Karigar <i class="fa-solid fa-bolt"></i>
           </button>
         </div>
+
+        <!-- Action CTAs -->
         <div style="display:flex;gap:10px;margin-bottom:16px;">
           <button class="btn-primary" style="font-size:13px;padding:12px;" onclick="goToScreen('screen-post-job')">
-            <i class="fa-solid fa-plus"></i> नई Requirement
+            <i class="fa-solid fa-plus"></i> Post Requirement
           </button>
-          <button class="btn-primary" style="background:#FFF;color:var(--primary-dark);border:1px solid #FFD3C2;font-size:13px;padding:12px;box-shadow:none;" onclick="goToScreen('screen-search')">
-            <i class="fa-solid fa-magnifying-glass"></i> कारीगर खोजें
+          <button class="btn-outline" style="font-size:13px;padding:12px;" onclick="goToScreen('screen-search')">
+            <i class="fa-solid fa-magnifying-glass"></i> Search Karigars
           </button>
         </div>
-        <h3 style="font-size:15px;font-weight:800;margin-bottom:8px;">मेरी Requirements</h3>
-        <div class="card" style="border-left:4px solid var(--primary);">
+
+        <!-- Active Requirements -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <h3 style="font-size:15px;font-weight:800;">My Active Requirements (2)</h3>
+          <span style="font-size:12px;color:var(--primary);font-weight:700;cursor:pointer;" onclick="goToScreen('screen-post-job')">+ Post New</span>
+        </div>
+
+        <div class="card" style="border-left:4px solid var(--primary);cursor:pointer;" onclick="goToScreen('screen-search')">
           <div style="display:flex;justify-content:space-between;">
-            <div><b>Halwai Karigar • 2 पद</b><div style="font-size:12px;color:var(--text-secondary);">किदवई नगर • ₹18,000/माह</div></div>
+            <div>
+              <div style="font-size:15px;font-weight:800;">Master Halwai • 2 Openings</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Kidwai Nagar • ₹18,000/Month • Wedding Order</div>
+            </div>
             <span class="tag green">Active</span>
           </div>
-          <div style="margin-top:8px;font-size:12px;color:#444;">इच्छुक: <b>8 कारीगर</b> • Shortlisted: <b>3</b></div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;font-size:12px;">
+            <span><i class="fa-solid fa-users" style="color:var(--primary);"></i> <b>8 Applied</b></span>
+            <span><i class="fa-solid fa-bookmark" style="color:var(--secondary);"></i> <b>3 Shortlisted</b></span>
+            <span style="color:var(--primary);font-weight:700;">View Applicants →</span>
+          </div>
+        </div>
+
+        <div class="card" style="border-left:4px solid var(--secondary);cursor:pointer;" onclick="goToScreen('screen-search')">
+          <div style="display:flex;justify-content:space-between;">
+            <div>
+              <div style="font-size:15px;font-weight:800;">Tandoor & Roti Master • 1 Opening</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Swaroop Nagar • ₹15,000/Month</div>
+            </div>
+            <span class="tag green">Active</span>
+          </div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;font-size:12px;">
+            <span><i class="fa-solid fa-users" style="color:var(--primary);"></i> <b>4 Applied</b></span>
+            <span><i class="fa-solid fa-bookmark" style="color:var(--secondary);"></i> <b>1 Shortlisted</b></span>
+            <span style="color:var(--primary);font-weight:700;">View Applicants →</span>
+          </div>
         </div>
       </div>
 
-      <!-- 7. POST JOB -->
+      <!-- ================= SCREEN 7: POST JOB ================= -->
       <div id="screen-post-job" class="app-screen">
-        <h2 style="font-size:20px;font-weight:800;margin:12px 0 4px 0;">नई Requirement पोस्ट करें</h2>
-        <div class="card">
-          <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">पद का नाम</label>
-          <input type="text" value="Master Halwai (हलवाई कारीगर)" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;font-size:14px;outline:none;">
-          <label style="font-size:12px;font-weight:700;display:block;margin:12px 0 6px 0;">वेतन प्रस्ताव (Salary)</label>
-          <input type="text" value="₹18,000 / महीना" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;font-size:14px;outline:none;">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-dashboard')"><i class="fa-solid fa-arrow-left"></i> Back to Home</button>
+          <span class="tag green"><i class="fa-solid fa-bolt"></i> Free Posting</span>
         </div>
-        <button class="btn-primary" onclick="goToScreen('screen-dashboard')">Post करें (Free) <i class="fa-solid fa-paper-plane"></i></button>
-      </div>
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Post New Requirement</h2>
+        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:14px;">Broadcast to 2,500+ food artisans across Kanpur</p>
 
-      <!-- 8. SEARCH -->
-      <div id="screen-search" class="app-screen">
-        <div class="search-bar">
-          <i class="fa-solid fa-magnifying-glass" style="color:#A8A29E;"></i>
-          <input type="text" placeholder="कारीगर खोजें (e.g. हलवाई, तंदूर)">
-        </div>
-        <div class="karigar-card">
-          <div class="karigar-header">
-            <div class="karigar-avatar">RK</div>
-            <div style="flex:1;">
-              <div style="display:flex;justify-content:space-between;">
-                <b>रमेश कुमार (Ramesh Kumar)</b>
-                <span class="tag green">Verified</span>
-              </div>
-              <div style="font-size:12px;color:var(--text-secondary);">हलवाई • 8 साल अनुभव • किदवई नगर</div>
+        <div class="card">
+          <div class="input-group">
+            <label class="input-label">Job Title / Role Required</label>
+            <input type="text" class="input-field" value="Master Halwai (Sweets Specialist)">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Required Craft & Dish Skills</label>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+              <span class="tag primary">Jalebi & Imarti ✕</span>
+              <span class="tag primary">Gulab Jamun ✕</span>
+              <span class="tag primary">Mawa Barfi ✕</span>
+            </div>
+            <input type="text" class="input-field" placeholder="+ Add more skills (e.g. Kaju Katli)">
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="input-group">
+              <label class="input-label">Vacancies</label>
+              <input type="number" class="input-field" value="2">
+            </div>
+            <div class="input-group">
+              <label class="input-label">Min. Experience</label>
+              <select class="input-field" style="background:#FFF;">
+                <option>2+ Years</option>
+                <option selected>5+ Years</option>
+                <option>8+ Years</option>
+              </select>
             </div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
-            <b>₹18,000 / माह</b>
-            <button class="btn-primary" style="padding:8px 12px;font-size:12px;width:auto;" onclick="goToScreen('screen-karigar-profile')">Profile देखें</button>
+
+          <div class="input-group">
+            <label class="input-label">Salary Offer</label>
+            <div style="display:flex;gap:10px;">
+              <input type="text" class="input-field" value="₹18,000 - ₹20,000" style="width:65%;">
+              <select class="input-field" style="width:35%;background:#FFF;">
+                <option selected>Monthly</option>
+                <option>Daily</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" style="margin-bottom:0;">
+            <label class="input-label">Job Duration Type</label>
+            <div style="display:flex;gap:6px;">
+              <span class="tag primary">Full Time</span>
+              <span class="tag">Part Time</span>
+              <span class="tag">Wedding / Event</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 9. DETAIL PROFILE -->
-      <div id="screen-karigar-profile" class="app-screen">
-        <span style="font-size:14px;font-weight:700;color:var(--primary);cursor:pointer;" onclick="goToScreen('screen-search')">
-          <i class="fa-solid fa-arrow-left"></i> वापस
-        </span>
-        <div class="card" style="text-align:center;margin-top:12px;">
-          <div class="karigar-avatar" style="width:70px;height:70px;margin:0 auto 10px auto;font-size:26px;">RK</div>
-          <h2>रमेश कुमार (Ramesh Kumar)</h2>
-          <p style="font-size:13px;color:var(--text-secondary);">Master Halwai • 8 Years Experience</p>
-          <div style="font-size:18px;font-weight:800;color:var(--primary-dark);margin:12px 0;">₹18,000 / महीना</div>
-        </div>
-        <div class="card" style="background:#FFFBEB;border:1px solid #FDE68A;">
-          <b style="color:#92400E;"><i class="fa-solid fa-lock"></i> Mobile Number सुरक्षित है</b>
-          <p style="font-size:12px;color:#B45309;margin-top:4px;">Admin Team कारीगर से बात करके आपको सीधे जोड़ेगी।</p>
-        </div>
-        <button class="btn-primary" onclick="alert('Admin Team को सूचना भेज दी गई है।')">
-          <i class="fa-solid fa-headset"></i> Admin से बात करवाएँ (Connect)
+        <button class="btn-primary" onclick="alert('Requirement successfully published! It has been broadcasted to local artisans.'); goToScreen('screen-dashboard');">
+          Publish Requirement (Free) <i class="fa-solid fa-paper-plane"></i>
         </button>
       </div>
 
-      <!-- 10. KARIGAR REG -->
-      <div id="screen-karigar-reg" class="app-screen">
-        <h2 style="font-size:20px;font-weight:800;margin:12px 0;">कारीगर पंजीयन</h2>
+      <!-- ================= SCREEN 8: SEARCH KARIGARS ================= -->
+      <div id="screen-search" class="app-screen">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-dashboard')"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <span class="tag green">34 Available Now</span>
+        </div>
+
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass" style="color:#A8A29E;"></i>
+          <input type="text" placeholder="Search by craft or dish (e.g. Halwai, Tandoor)">
+          <i class="fa-solid fa-microphone" style="color:var(--primary);cursor:pointer;"></i>
+        </div>
+
+        <div class="category-scroll">
+          <div class="cat-pill active">All Artisans</div>
+          <div class="cat-pill">Halwai</div>
+          <div class="cat-pill">Bawarchi</div>
+          <div class="cat-pill">Chaat Master</div>
+          <div class="cat-pill">Tandoor Cook</div>
+        </div>
+
+        <!-- Karigar 1 -->
         <div class="card">
-          <label style="font-size:12px;font-weight:700;">पूरा नाम</label>
-          <input type="text" value="सुरेश कुमार कश्यप" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;margin-bottom:10px;">
-          <label style="font-size:12px;font-weight:700;">हुनर (Category)</label>
-          <input type="text" value="हलवाई (Halwai)" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;">
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+            <div class="karigar-avatar">RK</div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:16px;">Ramesh Kumar</b>
+                <span class="tag green"><i class="fa-solid fa-check"></i> Verified</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">
+                Halwai • 8 Yrs Experience • Govind Nagar (2.4 km)
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;">
+            <span class="tag primary">Desi Ghee Jalebi</span>
+            <span class="tag primary">Gulab Jamun</span>
+            <span class="tag primary">Khoya Sweets</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid #F5F5F4;">
+            <div>
+              <div style="font-size:11px;color:var(--text-secondary);">Expected Wage:</div>
+              <div style="font-size:15px;font-weight:800;color:var(--primary-dark);">₹18,000 / Month</div>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-primary" style="padding:8px 14px;font-size:12px;width:auto;" onclick="goToScreen('screen-karigar-profile')">
+                View Profile
+              </button>
+              <button class="btn-outline" style="padding:8px 12px;font-size:12px;width:auto;" onclick="alert('Ramesh Kumar added to your shortlist!');">
+                Shortlist
+              </button>
+            </div>
+          </div>
         </div>
-        <button class="btn-primary" onclick="goToScreen('screen-karigar-feed')">पंजीकरण पूरा करें <i class="fa-solid fa-arrow-right"></i></button>
-      </div>
 
-      <!-- 11. KARIGAR FEED -->
-      <div id="screen-karigar-feed" class="app-screen">
-        <div style="font-size:18px;font-weight:800;margin-bottom:12px;">सुरेश कारीगर (Online)</div>
-        <div class="card" style="background:#1C1917;color:#FFF;">
-          <div style="font-size:12px;opacity:0.8;">अक्टूबर कमाई</div>
-          <div style="font-size:26px;font-weight:800;color:#FDE047;">₹24,800</div>
-        </div>
+        <!-- Karigar 2 -->
         <div class="card">
-          <b>Sharma Sweets & Caterers</b>
-          <div style="font-size:12px;color:var(--text-secondary);">किदवई नगर • ₹1,800 / दिन</div>
-          <button class="btn-primary" style="margin-top:10px;padding:8px;font-size:12px;" onclick="alert('आवेदन भेज दिया गया!')">आवेदन करें (Apply)</button>
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+            <div class="karigar-avatar" style="background:#DCFCE7;color:var(--accent-green);">SY</div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:16px;">Suresh Yadav</b>
+                <span class="tag green"><i class="fa-solid fa-check"></i> Verified</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">
+                Halwai & Chaat Master • 5 Yrs Exp • Kidwai Nagar (1.1 km)
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;">
+            <span class="tag primary">Kaju Katli</span>
+            <span class="tag primary">Special Aloo Tikki Chaat</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid #F5F5F4;">
+            <div>
+              <div style="font-size:11px;color:var(--text-secondary);">Expected Wage:</div>
+              <div style="font-size:15px;font-weight:800;color:var(--primary-dark);">₹16,000 / Month</div>
+            </div>
+            <button class="btn-primary" style="padding:8px 14px;font-size:12px;width:auto;" onclick="goToScreen('screen-karigar-profile')">
+              View Profile
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- 12. NOTIFICATIONS -->
-      <div id="screen-notifications" class="app-screen">
-        <h2 style="font-size:20px;font-weight:800;margin:12px 0;">सूचनाएं</h2>
-        <div class="card" style="border-left:4px solid var(--accent-green);">
-          <b>Sharma Sweets ने आपको Shortlist किया</b>
-          <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">14 Feb शादी कार्यक्रम</div>
+      <!-- ================= SCREEN 9: DETAIL PROFILE ================= -->
+      <div id="screen-karigar-profile" class="app-screen">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-search')"><i class="fa-solid fa-arrow-left"></i> Back to Search</button>
+          <span class="tag green"><i class="fa-solid fa-certificate"></i> Kanpur Verified</span>
         </div>
-      </div>
 
-      <!-- 13. WHATSAPP CHAT -->
-      <div id="screen-whatsapp-chat" class="app-screen">
-        <div style="background:#075E54;color:#FFF;padding:12px;border-radius:14px;margin-bottom:12px;">
-          <b>कारीगर मित्र कानपुर (WhatsApp Bot)</b>
-        </div>
-        <div class="card" style="font-size:13px;line-height:1.4;">
-          Sharma Sweets: Halwai Karigar • ₹18,000/माह<br>काम में रुचि हो तो <b>1</b> भेजें।
-        </div>
-        <div style="background:#DCF8C6;padding:8px 14px;border-radius:10px;max-width:40px;margin-left:auto;margin-bottom:10px;font-weight:800;">1</div>
-        <div class="card" style="font-size:13px;">✅ धन्यवाद! हमारी कानपुर Admin Team आपसे जल्द संपर्क करेगी।</div>
-      </div>
-
-      <!-- 14. MY PROFILE -->
-      <div id="screen-my-profile" class="app-screen">
-        <h2 style="font-size:20px;font-weight:800;margin:12px 0;">मेरी प्रोफाइल</h2>
         <div class="card" style="text-align:center;">
-          <div class="karigar-avatar" style="margin:0 auto 10px auto;">SS</div>
-          <b>Sharma Sweets & Caterers</b>
-          <p style="font-size:12px;color:var(--text-secondary);">Kidwai Nagar, Kanpur</p>
+          <div class="karigar-avatar" style="width:76px;height:76px;font-size:28px;margin:0 auto 10px auto;">RK</div>
+          <h2 style="font-size:20px;font-weight:800;">Ramesh Kumar</h2>
+          <p style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Master Halwai • 8 Years Experience</p>
+
+          <div style="display:flex;justify-content:center;gap:8px;margin:12px 0;">
+            <span class="tag primary">Govind Nagar, Kanpur</span>
+            <span class="tag green">Available Immediately</span>
+          </div>
+
+          <div style="border-top:1px solid #F5F5F4;padding-top:12px;text-align:left;">
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">Specialty Dishes:</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+              <span class="tag">Pure Desi Ghee Jalebi</span>
+              <span class="tag">Gulab Jamun</span>
+              <span class="tag">Mawa Barfi</span>
+              <span class="tag">Shahi Samosa</span>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin:14px 0 4px 0;">Expected Wage:</div>
+            <div style="font-size:18px;font-weight:800;color:var(--primary-dark);">₹18,000 / Month (or ₹1,500/Day)</div>
+          </div>
+        </div>
+
+        <!-- Phone Masking Security Notice -->
+        <div class="card" style="background:#FFFBEB;border:1.5px solid #FDE68A;">
+          <div style="display:flex;gap:12px;">
+            <i class="fa-solid fa-lock" style="color:#D97706;font-size:20px;margin-top:2px;"></i>
+            <div>
+              <div style="font-size:13px;font-weight:800;color:#92400E;">Phone Number Protected</div>
+              <p style="font-size:12px;color:#B45309;margin-top:4px;line-height:1.4;">
+                To guarantee fair pricing and avoid scams, our Admin Team verifies the artisan's availability and connects you directly via telephone.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn-primary" onclick="alert('Contact request sent! Our Kanpur Admin team will connect you to Ramesh Kumar within 15 minutes.'); goToScreen('screen-admin-panel');">
+            <i class="fa-solid fa-headset"></i> Connect via Admin (Free)
+          </button>
+          <button class="btn-outline" onclick="alert('Ramesh Kumar shortlisted!');">
+            <i class="fa-solid fa-bookmark"></i> Shortlist Profile
+          </button>
         </div>
       </div>
 
-      <!-- 15. ADMIN PANEL -->
-      <div id="screen-admin-panel" class="app-screen">
-        <div style="background:#1C1917;color:#FFF;padding:10px;border-radius:10px;margin-bottom:12px;">
-          <b><i class="fa-solid fa-shield-halved" style="color:var(--primary);"></i> Admin Dispatch Portal</b>
+      <!-- ================= SCREEN 10: KARIGAR REG ================= -->
+      <div id="screen-karigar-reg" class="app-screen">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-role')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag green">Free Worker Profile</span>
         </div>
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Karigar Registration</h2>
+        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:14px;">Create your profile to receive catering orders and restaurant jobs</p>
+
         <div class="card">
-          <b>#101: Sharma Sweets ➔ Ramesh Kumar</b>
-          <div style="font-size:12px;color:var(--text-secondary);margin:4px 0 10px 0;">Status: Pending Match</div>
-          <button class="btn-primary" style="padding:8px;font-size:12px;" onclick="alert('Calling Karigar!')">Call Karigar & Connect</button>
+          <div style="text-align:center;margin-bottom:14px;">
+            <div style="width:70px;height:70px;border-radius:50%;background:#F5F5F4;border:2px dashed #D6D3D1;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;">
+              <i class="fa-solid fa-camera" style="font-size:22px;color:#A8A29E;"></i>
+            </div>
+            <span style="font-size:11px;color:var(--primary);font-weight:700;margin-top:6px;display:block;">Upload Passport Photo or Selfie</span>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Full Name</label>
+            <input type="text" class="input-field" value="Suresh Kumar Kashyap">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Primary Craft Specialization</label>
+            <select class="input-field" style="background:#FFF;">
+              <option selected>Halwai (Sweets & Snacks Specialist)</option>
+              <option>Bawarchi (Curries, Rice & Gravies)</option>
+              <option>Tandoor & Roti Master</option>
+              <option>Chaat & Fast Food Specialist</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Years of Experience</label>
+            <input type="number" class="input-field" value="5">
+          </div>
+
+          <div class="input-group" style="margin-bottom:0;">
+            <label class="input-label">Expected Monthly Wage (₹)</label>
+            <input type="text" class="input-field" value="₹16,000 / Month">
+          </div>
         </div>
+
+        <button class="btn-primary" onclick="goToScreen('screen-karigar-feed')">
+          Complete Profile & Start Working <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- ================= SCREEN 11: KARIGAR FEED ================= -->
+      <div id="screen-karigar-feed" class="app-screen">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div>
+            <div style="font-size:12px;color:var(--text-secondary);">Welcome,</div>
+            <div style="font-size:18px;font-weight:800;">Suresh Karigar</div>
+          </div>
+          <span class="tag green"><i class="fa-solid fa-circle"></i> Available for Work</span>
+        </div>
+
+        <!-- Monthly Earnings -->
+        <div class="card" style="background:linear-gradient(135deg, #1C1917 0%, #292524 100%);color:#FFF;">
+          <div style="font-size:12px;opacity:0.8;">Earnings This Month (October)</div>
+          <div style="font-size:26px;font-weight:800;color:#FDE047;margin:4px 0;">₹24,800</div>
+          <div style="font-size:11px;opacity:0.85;">14 Catering Gigs Completed • 4.9 ⭐ Rating</div>
+        </div>
+
+        <h3 style="font-size:15px;font-weight:800;margin:14px 0 8px 0;">Nearby Open Gigs in Kanpur</h3>
+
+        <!-- Gig 1 -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <span class="tag primary">Wedding Order • 3 Days</span>
+              <div style="font-size:16px;font-weight:800;margin-top:6px;">Sharma Sweets & Caterers</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Kidwai Nagar, Kanpur (2.4 km)</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:16px;font-weight:800;color:var(--primary-dark);">₹1,800</div>
+              <div style="font-size:11px;color:var(--text-secondary);">Per Day</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#16A34A;font-weight:700;"><i class="fa-solid fa-bowl-food"></i> Meals Included</span>
+            <button class="btn-primary" style="padding:8px 14px;font-size:12px;width:auto;" onclick="alert('Application submitted! Sharma Sweets will contact you through Admin.'); goToScreen('screen-whatsapp-chat');">
+              Quick Apply <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Gig 2 -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <span class="tag">Full Time Job</span>
+              <div style="font-size:16px;font-weight:800;margin-top:6px;">Royal Dhaba & Restaurant</div>
+              <div style="font-size:12px;color:var(--text-secondary);">Govind Nagar, Kanpur (3.8 km)</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:16px;font-weight:800;color:var(--primary-dark);">₹16,000</div>
+              <div style="font-size:11px;color:var(--text-secondary);">Per Month</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#16A34A;font-weight:700;"><i class="fa-solid fa-clock"></i> 9 Hr Shift</span>
+            <button class="btn-primary" style="padding:8px 14px;font-size:12px;width:auto;" onclick="alert('Applied for Royal Dhaba!')">
+              Apply Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN 12: NOTIFICATIONS ================= -->
+      <div id="screen-notifications" class="app-screen">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-dashboard')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <span class="tag primary">Activity Center</span>
+        </div>
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:14px;">Notifications</h2>
+
+        <div class="card" style="border-left:4px solid var(--accent-green);">
+          <div style="display:flex;gap:12px;">
+            <i class="fa-solid fa-circle-check" style="color:var(--accent-green);font-size:20px;margin-top:2px;"></i>
+            <div style="flex:1;">
+              <div style="font-size:14px;font-weight:800;">Sharma Sweets Shortlisted You</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin:2px 0 8px 0;">Master Halwai role • 14 Feb Wedding Order</div>
+              <button class="btn-primary" style="padding:6px 12px;font-size:11px;width:auto;" onclick="goToScreen('screen-whatsapp-chat')">
+                Open WhatsApp Broadcast
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-left:4px solid var(--primary);">
+          <div style="display:flex;gap:12px;">
+            <i class="fa-solid fa-bullhorn" style="color:var(--primary);font-size:20px;margin-top:2px;"></i>
+            <div>
+              <div style="font-size:14px;font-weight:800;">New Requirement Posted in Kidwai Nagar</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">2 Halwai needed • ₹18,000/Month</div>
+              <span style="font-size:11px;color:#A8A29E;display:block;margin-top:6px;">15 mins ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN 13: WHATSAPP CHAT ================= -->
+      <div id="screen-whatsapp-chat" class="app-screen">
+        <div style="background:#075E54;color:#FFF;padding:12px;border-radius:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+          <i class="fa-brands fa-whatsapp" style="font-size:24px;color:#25D366;"></i>
+          <div>
+            <div style="font-size:14px;font-weight:800;">Karigar Mitra Kanpur (Bot)</div>
+            <div style="font-size:11px;opacity:0.85;">Official Worker Dispatch Channel</div>
+          </div>
+        </div>
+
+        <!-- Bot Broadcast -->
+        <div class="card" style="font-size:13px;line-height:1.45;margin-bottom:10px;">
+          <b>New Requirement Broadcast:</b><br>
+          Sharma Sweets, Kidwai Nagar<br>
+          Halwai Karigar • <b>₹18,000 / Month</b><br>
+          Experience: 3+ Years • Full Time<br><br>
+          👉 If interested in this gig, reply <b>1</b>.
+        </div>
+
+        <!-- Worker 1 reply -->
+        <div style="background:#DCF8C6;padding:10px 18px;border-radius:14px 14px 0 14px;width:fit-content;margin-left:auto;margin-bottom:10px;font-weight:800;font-size:16px;">
+          1
+        </div>
+
+        <!-- Bot Response -->
+        <div class="card" style="font-size:13px;line-height:1.45;">
+          ✅ <b>Thank you!</b> Our Kanpur Admin Team has notified the employer and will call you shortly on your phone to connect both parties.
+        </div>
+
+        <button class="btn-primary" style="margin-top:16px;" onclick="goToScreen('screen-admin-panel')">
+          View in Admin Matching Portal <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- ================= SCREEN 14: MY PROFILE ================= -->
+      <div id="screen-my-profile" class="app-screen">
+        <div class="screen-back-header">
+          <button class="btn-back" onclick="goToScreen('screen-dashboard')"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <span class="tag green"><i class="fa-solid fa-shield-halved"></i> Active Account</span>
+        </div>
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:14px;">My Profile & Settings</h2>
+
+        <div class="card" style="text-align:center;">
+          <div class="karigar-avatar" style="width:70px;height:70px;font-size:26px;margin:0 auto 10px auto;">SS</div>
+          <div style="font-size:18px;font-weight:800;">Sharma Sweets & Caterers</div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Kidwai Nagar, Kanpur • Member since 2024</div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F5F5F4;cursor:pointer;" onclick="goToScreen('screen-lang')">
+            <span><i class="fa-solid fa-language" style="color:var(--primary);margin-right:10px;"></i> App Language (English)</span>
+            <i class="fa-solid fa-chevron-right" style="color:#A8A29E;"></i>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F5F5F4;cursor:pointer;" onclick="goToScreen('screen-admin-panel')">
+            <span><i class="fa-solid fa-user-gear" style="color:var(--secondary);margin-right:10px;"></i> Admin Dispatch Portal</span>
+            <i class="fa-solid fa-chevron-right" style="color:#A8A29E;"></i>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F5F5F4;">
+            <span><i class="fa-solid fa-phone" style="color:var(--accent-green);margin-right:10px;"></i> Kanpur Support Helpline</span>
+            <b>0512-233-XXXX</b>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:12px 0;cursor:pointer;" onclick="goToScreen('screen-splash')">
+            <span style="color:#DC2626;font-weight:700;"><i class="fa-solid fa-right-from-bracket" style="margin-right:10px;"></i> Log Out</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCREEN 15: ADMIN PANEL ================= -->
+      <div id="screen-admin-panel" class="app-screen">
+        <div style="background:#1C1917;color:#FFF;padding:12px;border-radius:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:13px;font-weight:800;"><i class="fa-solid fa-shield-halved" style="color:var(--primary);"></i> Admin Operations Portal</span>
+          <span class="tag green" style="font-size:10px;">Internal Only</span>
+        </div>
+
+        <div class="card" style="border-left:4px solid var(--primary);">
+          <div style="font-size:13px;font-weight:800;margin-bottom:6px;">Pending Match Request #101</div>
+          <div style="font-size:12px;color:#44403C;line-height:1.5;">
+            <b>Employer:</b> Sharma Sweets & Caterers<br>
+            <b>Candidate:</b> Ramesh Kumar (Halwai, 8 Yrs Exp)<br>
+            <b>Status:</b> Requested direct contact
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <button class="btn-primary" style="padding:7px 12px;font-size:11px;width:auto;" onclick="alert('Calling Karigar Ramesh Kumar at +91-98390XXXXX...');">
+              <i class="fa-solid fa-phone"></i> Call Karigar
+            </button>
+            <button class="btn-whatsapp" style="padding:7px 12px;font-size:11px;width:auto;" onclick="alert('Connecting Sharma Sweets with Ramesh Kumar!');">
+              Connect Employer
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:13px;font-weight:800;margin-bottom:6px;">Incoming WhatsApp Leads</div>
+          <p style="font-size:12px;color:var(--text-secondary);line-height:1.4;">
+            +91-97XXXXXX21: <i>"Chinese cook with 5 yrs dhaba experience, looking for orders in Swaroop Nagar."</i>
+          </p>
+          <button class="btn-primary" style="padding:7px 12px;font-size:11px;margin-top:8px;background:#44403C;box-shadow:none;width:auto;" onclick="goToScreen('screen-karigar-reg')">
+            + Create Worker Profile
+          </button>
+        </div>
+
+        <button class="btn-outline" style="margin-top:8px;" onclick="goToScreen('screen-dashboard')">
+          ← Exit Admin & Return to App
+        </button>
       </div>
 
     </div>
 
-    <!-- Bottom Nav -->
+    <!-- Bottom Navigation Bar -->
     <div class="bottom-nav">
-      <div class="nav-item active" onclick="goToScreen('screen-dashboard')">
+      <div class="nav-item" onclick="goToScreen('screen-dashboard')">
         <i class="fa-solid fa-house"></i>
-        <span>होम</span>
+        <span>Home</span>
       </div>
       <div class="nav-item" onclick="goToScreen('screen-search')">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <span>खोजें</span>
+        <span>Search</span>
       </div>
       <div class="nav-item" onclick="goToScreen('screen-post-job')">
         <i class="fa-solid fa-circle-plus" style="font-size:24px;color:var(--primary);"></i>
-        <span>मांग डालें</span>
+        <span>Post Job</span>
       </div>
       <div class="nav-item" onclick="goToScreen('screen-notifications')">
         <i class="fa-solid fa-bell"></i>
-        <span>सूचना</span>
+        <span>Alerts</span>
       </div>
       <div class="nav-item" onclick="goToScreen('screen-my-profile')">
         <i class="fa-solid fa-user"></i>
-        <span>प्रोफाइल</span>
+        <span>Account</span>
       </div>
     </div>
   </div>
 
   <script>
     function goToScreen(screenId) {
-      document.querySelectorAll('.app-screen').forEach(el => el.classList.remove('active'));
+      // Hide all screens
+      const screens = document.querySelectorAll('.app-screen');
+      screens.forEach(s => s.classList.remove('active'));
+
+      // Show target screen
       const target = document.getElementById(screenId);
       if (target) {
         target.classList.add('active');
         document.querySelector('.screen-viewport').scrollTop = 0;
       }
+
+      // Sync the top dropdown selector
       const select = document.getElementById('screenSelect');
       if (select) select.value = screenId;
 
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-      if (screenId === 'screen-dashboard') document.querySelectorAll('.nav-item')[0].classList.add('active');
-      if (screenId === 'screen-search') document.querySelectorAll('.nav-item')[1].classList.add('active');
-      if (screenId === 'screen-post-job') document.querySelectorAll('.nav-item')[2].classList.add('active');
-      if (screenId === 'screen-notifications') document.querySelectorAll('.nav-item')[3].classList.add('active');
-      if (screenId === 'screen-my-profile') document.querySelectorAll('.nav-item')[4].classList.add('active');
+      // Sync the bottom nav bar highlight
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(n => n.classList.remove('active'));
+      if (screenId === 'screen-dashboard') navItems[0].classList.add('active');
+      if (screenId === 'screen-search' || screenId === 'screen-karigar-profile') navItems[1].classList.add('active');
+      if (screenId === 'screen-post-job') navItems[2].classList.add('active');
+      if (screenId === 'screen-notifications' || screenId === 'screen-whatsapp-chat') navItems[3].classList.add('active');
+      if (screenId === 'screen-my-profile' || screenId === 'screen-admin-panel') navItems[4].classList.add('active');
     }
 
-    function selectLang(el) {
-      document.querySelectorAll('#screen-lang .card').forEach(c => {
-        c.style.borderColor = 'var(--border-light)';
-        c.style.background = '#FFF';
-        c.querySelector('i').className = 'fa-regular fa-circle';
-        c.querySelector('i').style.color = '#D6D3D1';
-      });
-      el.style.borderColor = 'var(--primary)';
-      el.style.background = 'var(--primary-light)';
-      el.querySelector('i').className = 'fa-solid fa-circle-check';
-      el.querySelector('i').style.color = 'var(--primary)';
-    }
+    // Initialize to Splash screen on load
+    window.addEventListener('DOMContentLoaded', () => {
+      goToScreen('screen-splash');
+    });
   </script>
 </body>
 </html>
