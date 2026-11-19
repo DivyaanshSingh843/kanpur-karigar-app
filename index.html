@@ -102,6 +102,7 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   /* Dynamic Island Notch */
@@ -253,6 +254,7 @@
     cursor: pointer;
     box-shadow: 0 6px 16px -3px rgba(240, 90, 40, 0.35);
     transition: all 0.15s;
+    user-select: none;
   }
   .btn-primary:active { transform: scale(0.98); }
 
@@ -270,6 +272,8 @@
     justify-content: center;
     gap: 8px;
     cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
   }
   .btn-outline:active { transform: scale(0.98); }
 
@@ -288,7 +292,9 @@
     gap: 8px;
     cursor: pointer;
     box-shadow: 0 5px 14px -3px rgba(37, 211, 102, 0.3);
+    transition: all 0.15s;
   }
+  .btn-whatsapp:active { transform: scale(0.98); }
 
   .card {
     background: var(--card-white);
@@ -297,6 +303,7 @@
     padding: 14px;
     margin-bottom: 10px;
     box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
   }
 
   .tag {
@@ -309,9 +316,14 @@
     border-radius: 999px;
     background: #F5F5F4;
     color: #57534E;
+    transition: all 0.15s;
   }
   .tag.primary { background: var(--primary-light); color: var(--primary-dark); }
   .tag.green { background: var(--accent-green-light); color: var(--accent-green); }
+  .tag.interactive { cursor: pointer; }
+  .tag.interactive.selected { background: var(--primary); color: #FFF; }
+  .tag.removable { cursor: pointer; }
+  .tag.removable:hover { background: #FEE2E2; color: #DC2626; }
 
   /* Input wrapper */
   .input-group { margin-bottom: 12px; }
@@ -353,10 +365,10 @@
     font-size: 19px;
     font-weight: 800;
     color: var(--primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    outline: none;
+    transition: all 0.15s;
   }
+  .otp-box:focus { border-color: var(--primary); background: var(--primary-light); }
   .otp-box.filled { border-color: var(--primary); background: var(--primary-light); }
 
   /* Stat Grid */
@@ -371,7 +383,10 @@
     border: 1px solid var(--border-light);
     border-radius: 14px;
     padding: 11px 13px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
   .stat-num { font-size: 22px; font-weight: 800; color: var(--primary-dark); }
   .stat-label { font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-top: 2px; }
 
@@ -414,6 +429,7 @@
     background: #FFF;
     border: 1px solid var(--border-light);
     cursor: pointer;
+    transition: all 0.15s;
   }
   .cat-pill.active {
     background: var(--primary);
@@ -433,6 +449,7 @@
     justify-content: center;
     font-size: 18px;
     font-weight: 800;
+    flex-shrink: 0;
   }
 
   /* Back Button Header */
@@ -453,11 +470,144 @@
     border: none;
     cursor: pointer;
   }
+
+  /* Stepper Buttons for Post Job */
+  .stepper {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #E7E5E4;
+    border-radius: 11px;
+    background: #FFF;
+    overflow: hidden;
+  }
+  .stepper button {
+    background: #F5F5F4;
+    border: none;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #44403C;
+    cursor: pointer;
+  }
+  .stepper button:active { background: #E7E5E4; }
+  .stepper input {
+    width: 100%;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+    outline: none;
+  }
+
+  /* Toast Notification */
+  #appToast {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: #1C1917;
+    color: #FFF;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    z-index: 250;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  #appToast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Simulated Call Overlay */
+  #callOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #18181B 0%, #09090B 100%);
+    z-index: 300;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 70px 24px 40px 24px;
+    color: #FFF;
+    text-align: center;
+    border-radius: clamp(30px, 3.8vh, 42px);
+  }
+  #callOverlay.active { display: flex; animation: fadeIn 0.25s ease-out; }
+
+  /* Booking Confirmation Bottom Sheet Modal */
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 210;
+    display: none;
+    align-items: flex-end;
+    border-radius: clamp(30px, 3.8vh, 42px);
+  }
+  .modal-backdrop.active { display: flex; animation: fadeIn 0.15s ease-out; }
+  .bottom-sheet {
+    background: #FFF;
+    width: 100%;
+    border-radius: 24px 24px 0 0;
+    padding: 20px 18px 28px 18px;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
+    animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  /* Chat Message Bubbles */
+  .chat-bubble-bot {
+    background: #FFF;
+    border: 1px solid #E7E5E4;
+    border-radius: 14px 14px 14px 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin-bottom: 8px;
+    max-width: 85%;
+    box-shadow: var(--shadow-sm);
+  }
+  .chat-bubble-user {
+    background: #DCF8C6;
+    border-radius: 14px 14px 0 14px;
+    padding: 8px 14px;
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-left: auto;
+    margin-bottom: 8px;
+    width: fit-content;
+    box-shadow: var(--shadow-sm);
+  }
+  .typing-dots span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #78716C;
+    margin: 0 2px;
+    animation: blink 1.2s infinite ease-in-out;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
 </style>
 </head>
 <body>
 
-  <!-- Screen Selector Bar (Synced to current screen) -->
+  <!-- Screen Selector Bar -->
   <div class="screen-selector-bar">
     <span><i class="fa-solid fa-mobile-screen"></i> Jump to Screen:</span>
     <select id="screenSelect" class="screen-select" onchange="goToScreen(this.value)">
@@ -481,8 +631,59 @@
 
   <!-- Device Mockup Shell -->
   <div class="device-wrapper">
+    <!-- Dynamic Island Notch -->
     <div class="notch"><div class="lens"></div></div>
 
+    <!-- Floating In-App Toast -->
+    <div id="appToast"><i class="fa-solid fa-circle-check" style="color:#22C55E;"></i> <span id="toastMsg">Action Done</span></div>
+
+    <!-- Simulated Phone Call Modal -->
+    <div id="callOverlay">
+      <div>
+        <div style="font-size:12px;color:#A1A1AA;text-transform:uppercase;letter-spacing:1px;">Kanpur Karigar Admin Line</div>
+        <div id="callTargetName" style="font-size:22px;font-weight:800;margin-top:6px;">Ramesh Kumar</div>
+        <div id="callTargetPhone" style="font-size:14px;color:#D4D4D8;margin-top:4px;">+91-98390-14821</div>
+        <div id="callTimer" style="font-size:13px;color:#22C55E;font-weight:700;margin-top:8px;">Calling...</div>
+      </div>
+      <div style="width:110px;height:110px;border-radius:50%;background:#27272A;display:flex;align-items:center;justify-content:center;margin:20px auto;border:2px solid #3F3F46;">
+        <i class="fa-solid fa-phone" style="font-size:42px;color:#22C55E;"></i>
+      </div>
+      <div style="width:100%;">
+        <button onclick="endSimulatedCall()" style="background:#EF4444;color:#FFF;border:none;border-radius:50px;padding:14px 28px;font-size:15px;font-weight:800;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+          <i class="fa-solid fa-phone-slash"></i> End Call
+        </button>
+      </div>
+    </div>
+
+    <!-- Booking / Connect Sheet Modal -->
+    <div id="bookingModal" class="modal-backdrop" onclick="if(event.target===this) closeBookingModal()">
+      <div class="bottom-sheet">
+        <div style="width:40px;height:4px;border-radius:999px;background:#E7E5E4;margin:0 auto 14px auto;"></div>
+        <h3 id="modalArtisanTitle" style="font-size:17px;font-weight:800;color:#1C1917;">Connect with Ramesh Kumar</h3>
+        <p style="font-size:12px;color:var(--text-secondary);margin:4px 0 14px 0;">Our Kanpur Admin Team verifies artisan availability and connects you directly via telephone.</p>
+        
+        <div class="input-group">
+          <label class="input-label">When do you need the artisan?</label>
+          <select id="bookingShiftSelect" class="input-field" style="background:#FFF;">
+            <option>Today Evening / Night (Urgent)</option>
+            <option selected>Tomorrow Morning Shift</option>
+            <option>Upcoming Wedding Event (Next 3 Days)</option>
+            <option>Full-Time Monthly Trial</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Special Notes for Admin Desk</label>
+          <input id="bookingNotesInput" type="text" class="input-field" placeholder="e.g. Need expert for 50kg Desi Ghee Jalebi">
+        </div>
+
+        <button class="btn-primary" onclick="submitBookingRequest()">
+          <i class="fa-solid fa-headset"></i> Confirm Admin Match Request (Free)
+        </button>
+      </div>
+    </div>
+
+    <!-- Screen Viewport -->
     <div class="screen-viewport">
       <!-- Dynamic Status Bar -->
       <div class="status-bar" id="appStatusBar">
@@ -524,23 +725,23 @@
         <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Choose Language</h2>
         <p style="font-size:12.5px;color:var(--text-secondary);margin-bottom:16px;">Select your preferred app browsing language</p>
 
-        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;">
+        <div id="langCardEn" class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;" onclick="selectLanguage('English')">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
-              <div style="font-size:16px;font-weight:800;color:var(--primary-dark);">English (Selected)</div>
+              <div style="font-size:16px;font-weight:800;color:var(--primary-dark);">English</div>
               <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">Standard app experience in English</div>
             </div>
-            <i class="fa-solid fa-circle-check" style="color:var(--primary);font-size:20px;"></i>
+            <i id="langCheckEn" class="fa-solid fa-circle-check" style="color:var(--primary);font-size:20px;"></i>
           </div>
         </div>
 
-        <div class="card" style="cursor:pointer;opacity:0.75;">
+        <div id="langCardHi" class="card" style="cursor:pointer;opacity:0.75;" onclick="selectLanguage('Hindi')">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
               <div style="font-size:16px;font-weight:700;">Hindi (हिन्दी)</div>
               <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">Regional language audio assistance</div>
             </div>
-            <i class="fa-regular fa-circle" style="color:#D6D3D1;font-size:20px;"></i>
+            <i id="langCheckHi" class="fa-regular fa-circle" style="color:#D6D3D1;font-size:20px;"></i>
           </div>
         </div>
 
@@ -564,21 +765,21 @@
           <label class="input-label">Mobile Number</label>
           <div style="display:flex;align-items:center;background:#FFF;border:1.5px solid #E7E5E4;border-radius:11px;padding:9px 13px;">
             <span style="font-weight:700;color:#44403C;padding-right:8px;border-right:1px solid #D6D3D1;margin-right:8px;font-size:13px;">+91</span>
-            <input type="tel" value="98390 12345" style="border:none;background:transparent;font-size:14px;font-weight:700;width:100%;outline:none;">
+            <input id="loginPhoneInput" type="tel" value="98390 12345" style="border:none;background:transparent;font-size:14px;font-weight:700;width:100%;outline:none;">
           </div>
         </div>
 
         <div class="input-group">
           <label class="input-label">Enter 4-Digit OTP Code</label>
           <div class="otp-boxes">
-            <div class="otp-box filled">7</div>
-            <div class="otp-box filled">4</div>
-            <div class="otp-box filled">9</div>
-            <div class="otp-box">1</div>
+            <input type="text" maxlength="1" class="otp-box filled" value="7" oninput="handleOtpInput(this, 1)">
+            <input type="text" maxlength="1" class="otp-box filled" value="4" oninput="handleOtpInput(this, 2)">
+            <input type="text" maxlength="1" class="otp-box filled" value="9" oninput="handleOtpInput(this, 3)">
+            <input type="text" maxlength="1" class="otp-box filled" value="1" oninput="handleOtpInput(this, null)">
           </div>
         </div>
 
-        <button class="btn-primary" onclick="goToScreen('screen-role')">
+        <button class="btn-primary" onclick="verifyLoginOtp()">
           Verify OTP & Continue <i class="fa-solid fa-arrow-right"></i>
         </button>
 
@@ -586,7 +787,7 @@
           <span>— or quick login with —</span>
         </div>
 
-        <button class="btn-whatsapp" onclick="goToScreen('screen-dashboard')">
+        <button class="btn-whatsapp" onclick="quickLoginWhatsApp()">
           <i class="fa-brands fa-whatsapp" style="font-size:17px;"></i> Continue with WhatsApp
         </button>
       </div>
@@ -600,7 +801,7 @@
         <h2 style="font-size:20px;font-weight:800;margin-bottom:4px;">Select Account Type</h2>
         <p style="font-size:12.5px;color:var(--text-secondary);margin-bottom:18px;">How would you like to use Kanpur Karigar?</p>
 
-        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;margin-bottom:12px;" onclick="goToScreen('screen-employer-reg')">
+        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;margin-bottom:12px;" onclick="selectRole('employer')">
           <div style="display:flex;gap:12px;align-items:center;">
             <div style="width:50px;height:50px;border-radius:14px;background:#FFF;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:22px;">
               <i class="fa-solid fa-shop"></i>
@@ -612,7 +813,7 @@
           </div>
         </div>
 
-        <div class="card" style="cursor:pointer;" onclick="goToScreen('screen-karigar-reg')">
+        <div class="card" style="cursor:pointer;" onclick="selectRole('karigar')">
           <div style="display:flex;gap:12px;align-items:center;">
             <div style="width:50px;height:50px;border-radius:14px;background:#F5F5F4;display:flex;align-items:center;justify-content:center;color:#44403C;font-size:22px;">
               <i class="fa-solid fa-hat-chef"></i>
@@ -637,38 +838,39 @@
         <div class="card">
           <div class="input-group">
             <label class="input-label">Owner / Manager Full Name</label>
-            <input type="text" class="input-field" value="Rajesh Sharma">
+            <input id="empOwnerInput" type="text" class="input-field" value="Rajesh Sharma">
           </div>
 
           <div class="input-group">
             <label class="input-label">Business / Shop Name</label>
-            <input type="text" class="input-field" value="Sharma Sweets & Caterers">
+            <input id="empBusinessInput" type="text" class="input-field" value="Sharma Sweets & Caterers">
           </div>
 
           <div class="input-group">
             <label class="input-label">Business Category</label>
-            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;">
-              <span class="tag primary">Sweet Shop</span>
-              <span class="tag">Catering</span>
-              <span class="tag">Dhaba</span>
-              <span class="tag">Restaurant</span>
-              <span class="tag">Food Cart</span>
+            <div id="empCategoryChips" style="display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;">
+              <span class="tag interactive selected" onclick="toggleCategoryChip(this)">Sweet Shop</span>
+              <span class="tag interactive" onclick="toggleCategoryChip(this)">Catering</span>
+              <span class="tag interactive" onclick="toggleCategoryChip(this)">Dhaba</span>
+              <span class="tag interactive" onclick="toggleCategoryChip(this)">Restaurant</span>
+              <span class="tag interactive" onclick="toggleCategoryChip(this)">Food Cart</span>
             </div>
           </div>
 
           <div class="input-group" style="margin-bottom:0;">
             <label class="input-label">Operating Locality in Kanpur</label>
-            <select class="input-field" style="background:#FFF;">
+            <select id="empLocalitySelect" class="input-field" style="background:#FFF;">
               <option selected>Kidwai Nagar, Kanpur</option>
               <option>Gumti No. 5, Kanpur</option>
               <option>Swaroop Nagar, Kanpur</option>
               <option>Govind Nagar, Kanpur</option>
               <option>Civil Lines, Kanpur</option>
+              <option>Birhana Road, Kanpur</option>
             </select>
           </div>
         </div>
 
-        <button class="btn-primary" onclick="goToScreen('screen-dashboard')">
+        <button class="btn-primary" onclick="submitEmployerReg()">
           Create Business Profile <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
@@ -678,24 +880,24 @@
         <div style="display:flex;justify-content:space-between;align-items:center;margin:4px 0 12px 0;">
           <div>
             <div style="font-size:12px;color:var(--text-secondary);font-weight:600;">Welcome back,</div>
-            <div style="font-size:18px;font-weight:800;">Sharma Sweets 👋</div>
+            <div id="dashBusinessTitle" style="font-size:18px;font-weight:800;">Sharma Sweets 👋</div>
           </div>
           <span class="tag green"><i class="fa-solid fa-circle-check"></i> Verified Owner</span>
         </div>
 
         <!-- 4 Metrics Grid -->
         <div class="stat-grid">
-          <div class="stat-card" onclick="goToScreen('screen-post-job')" style="cursor:pointer;">
-            <div class="stat-num">03</div>
+          <div class="stat-card" onclick="goToScreen('screen-post-job')">
+            <div id="metricActiveDemands" class="stat-num">02</div>
             <div class="stat-label">Active Demands</div>
           </div>
-          <div class="stat-card" onclick="goToScreen('screen-notifications')" style="cursor:pointer;">
-            <div class="stat-num">14</div>
+          <div class="stat-card" onclick="goToScreen('screen-notifications')">
+            <div id="metricApplicants" class="stat-num">12</div>
             <div class="stat-label">Applicant Karigars</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-num">02</div>
-            <div class="stat-label">On Duty Today</div>
+          <div class="stat-card" onclick="filterByAvailability('immediate')">
+            <div id="metricShortlisted" class="stat-num">04</div>
+            <div class="stat-label">Shortlisted Talent</div>
           </div>
           <div class="stat-card">
             <div class="stat-num">₹4,200</div>
@@ -708,7 +910,7 @@
           <span class="tag primary" style="background:#FFE0D3;color:var(--primary-dark);font-weight:800;">🚨 EMERGENCY SOS</span>
           <div style="font-size:14px;font-weight:800;color:#992905;margin:5px 0 3px 0;">Need an urgent replacement tonight?</div>
           <p style="font-size:11.5px;color:#78350F;margin-bottom:8px;">Dispatch verified halwais and cooks within 30 minutes in Kanpur</p>
-          <button class="btn-primary" style="padding:8px 14px;font-size:12px;width:auto;" onclick="goToScreen('screen-search')">
+          <button class="btn-primary" style="padding:8px 14px;font-size:12px;width:auto;" onclick="triggerSosBooking()">
             Book Instant Karigar <i class="fa-solid fa-bolt"></i>
           </button>
         </div>
@@ -723,40 +925,14 @@
           </button>
         </div>
 
-        <!-- Active Requirements -->
+        <!-- Active Requirements Container -->
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <h3 style="font-size:14px;font-weight:800;">My Active Requirements (2)</h3>
+          <h3 id="activeReqTitle" style="font-size:14px;font-weight:800;">My Active Requirements (2)</h3>
           <span style="font-size:11.5px;color:var(--primary);font-weight:700;cursor:pointer;" onclick="goToScreen('screen-post-job')">+ Post New</span>
         </div>
 
-        <div class="card" style="border-left:4px solid var(--primary);cursor:pointer;" onclick="goToScreen('screen-search')">
-          <div style="display:flex;justify-content:space-between;">
-            <div>
-              <div style="font-size:14px;font-weight:800;">Master Halwai • 2 Openings</div>
-              <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">Kidwai Nagar • ₹18,000/Month</div>
-            </div>
-            <span class="tag green">Active</span>
-          </div>
-          <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;font-size:11.5px;">
-            <span><i class="fa-solid fa-users" style="color:var(--primary);"></i> <b>8 Applied</b></span>
-            <span><i class="fa-solid fa-bookmark" style="color:var(--secondary);"></i> <b>3 Shortlisted</b></span>
-            <span style="color:var(--primary);font-weight:700;">View →</span>
-          </div>
-        </div>
-
-        <div class="card" style="border-left:4px solid var(--secondary);cursor:pointer;" onclick="goToScreen('screen-search')">
-          <div style="display:flex;justify-content:space-between;">
-            <div>
-              <div style="font-size:14px;font-weight:800;">Tandoor & Roti Master • 1 Opening</div>
-              <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">Swaroop Nagar • ₹15,000/Month</div>
-            </div>
-            <span class="tag green">Active</span>
-          </div>
-          <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;font-size:11.5px;">
-            <span><i class="fa-solid fa-users" style="color:var(--primary);"></i> <b>4 Applied</b></span>
-            <span><i class="fa-solid fa-bookmark" style="color:var(--secondary);"></i> <b>1 Shortlisted</b></span>
-            <span style="color:var(--primary);font-weight:700;">View →</span>
-          </div>
+        <div id="dashboardRequirementsList">
+          <!-- Populated by JavaScript -->
         </div>
       </div>
 
@@ -772,27 +948,34 @@
         <div class="card">
           <div class="input-group">
             <label class="input-label">Job Title / Role Required</label>
-            <input type="text" class="input-field" value="Master Halwai (Sweets Specialist)">
+            <input id="postJobTitle" type="text" class="input-field" value="Master Halwai (Sweets Specialist)">
           </div>
 
           <div class="input-group">
-            <label class="input-label">Required Craft & Dish Skills</label>
-            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;">
-              <span class="tag primary">Jalebi & Imarti ✕</span>
-              <span class="tag primary">Gulab Jamun ✕</span>
-              <span class="tag primary">Mawa Barfi ✕</span>
+            <label class="input-label">Required Craft & Dish Skills (Tap to remove)</label>
+            <div id="postJobSkillChips" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;">
+              <span class="tag primary removable" onclick="removeSkillChip(this)">Jalebi & Imarti ✕</span>
+              <span class="tag primary removable" onclick="removeSkillChip(this)">Gulab Jamun ✕</span>
+              <span class="tag primary removable" onclick="removeSkillChip(this)">Mawa Barfi ✕</span>
             </div>
-            <input type="text" class="input-field" placeholder="+ Add more skills (e.g. Kaju Katli)">
+            <div style="display:flex;gap:6px;">
+              <input id="newSkillInput" type="text" class="input-field" placeholder="+ Add skill (e.g. Kaju Katli)" onkeydown="if(event.key==='Enter'){addSkillChip();event.preventDefault();}">
+              <button onclick="addSkillChip()" style="background:#F5F5F4;border:1px solid #D6D3D1;border-radius:10px;padding:0 12px;font-weight:800;cursor:pointer;">+</button>
+            </div>
           </div>
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
             <div class="input-group">
               <label class="input-label">Vacancies</label>
-              <input type="number" class="input-field" value="2">
+              <div class="stepper">
+                <button type="button" onclick="stepVacancy(-1)">-</button>
+                <input id="postJobVacancies" type="text" value="2" readonly>
+                <button type="button" onclick="stepVacancy(1)">+</button>
+              </div>
             </div>
             <div class="input-group">
               <label class="input-label">Min. Experience</label>
-              <select class="input-field" style="background:#FFF;">
+              <select id="postJobExp" class="input-field" style="background:#FFF;">
                 <option>2+ Years</option>
                 <option selected>5+ Years</option>
                 <option>8+ Years</option>
@@ -803,8 +986,8 @@
           <div class="input-group">
             <label class="input-label">Salary Offer</label>
             <div style="display:flex;gap:8px;">
-              <input type="text" class="input-field" value="₹18,000 - ₹20,000" style="width:65%;">
-              <select class="input-field" style="width:35%;background:#FFF;">
+              <input id="postJobSalary" type="text" class="input-field" value="₹18,000 - ₹20,000" style="width:65%;">
+              <select id="postJobSalaryType" class="input-field" style="width:35%;background:#FFF;">
                 <option selected>Monthly</option>
                 <option>Daily</option>
               </select>
@@ -813,15 +996,15 @@
 
           <div class="input-group" style="margin-bottom:0;">
             <label class="input-label">Job Duration Type</label>
-            <div style="display:flex;gap:5px;">
-              <span class="tag primary">Full Time</span>
-              <span class="tag">Part Time</span>
-              <span class="tag">Wedding / Event</span>
+            <div id="durationChips" style="display:flex;gap:5px;">
+              <span class="tag interactive selected" onclick="selectDurationChip(this)">Full Time</span>
+              <span class="tag interactive" onclick="selectDurationChip(this)">Part Time</span>
+              <span class="tag interactive" onclick="selectDurationChip(this)">Wedding / Event</span>
             </div>
           </div>
         </div>
 
-        <button class="btn-primary" onclick="alert('Requirement successfully published! Broadcasted to local artisans.'); goToScreen('screen-dashboard');">
+        <button class="btn-primary" onclick="submitNewRequirement()">
           Publish Requirement (Free) <i class="fa-solid fa-paper-plane"></i>
         </button>
       </div>
@@ -830,85 +1013,26 @@
       <div id="screen-search" class="app-screen">
         <div class="screen-back-header">
           <button class="btn-back" onclick="goToScreen('screen-dashboard')"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
-          <span class="tag green">34 Available Now</span>
+          <span id="searchAvailableBadge" class="tag green">6 Available Now</span>
         </div>
 
         <div class="search-bar">
           <i class="fa-solid fa-magnifying-glass" style="color:#A8A29E;"></i>
-          <input type="text" placeholder="Search craft (e.g. Halwai, Tandoor)">
-          <i class="fa-solid fa-microphone" style="color:var(--primary);cursor:pointer;" onclick="alert('Listening for craft or dish in Kanpur...')"></i>
+          <input id="karigarSearchInput" type="text" placeholder="Search craft or dish (e.g. Jalebi, Biryani, Tandoor)" oninput="filterKarigars()">
+          <i class="fa-solid fa-microphone" style="color:var(--primary);cursor:pointer;" onclick="simulateVoiceSearch()"></i>
         </div>
 
-        <div class="category-scroll">
-          <div class="cat-pill active">All Artisans</div>
-          <div class="cat-pill">Halwai</div>
-          <div class="cat-pill">Bawarchi</div>
-          <div class="cat-pill">Chaat Master</div>
-          <div class="cat-pill">Tandoor Cook</div>
+        <div class="category-scroll" id="categoryScrollPills">
+          <div class="cat-pill active" onclick="selectSearchCategory('All Artisans', this)">All Artisans</div>
+          <div class="cat-pill" onclick="selectSearchCategory('Halwai', this)">Halwai</div>
+          <div class="cat-pill" onclick="selectSearchCategory('Bawarchi', this)">Bawarchi</div>
+          <div class="cat-pill" onclick="selectSearchCategory('Chaat Master', this)">Chaat Master</div>
+          <div class="cat-pill" onclick="selectSearchCategory('Tandoor Cook', this)">Tandoor Cook</div>
         </div>
 
-        <!-- Karigar 1 -->
-        <div class="card">
-          <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
-            <div class="karigar-avatar">RK</div>
-            <div style="flex:1;">
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <b style="font-size:15px;">Ramesh Kumar</b>
-                <span class="tag green"><i class="fa-solid fa-check"></i> Verified</span>
-              </div>
-              <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">
-                Halwai • 8 Yrs Exp • Govind Nagar (2.4 km)
-              </div>
-            </div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0;">
-            <span class="tag primary">Desi Ghee Jalebi</span>
-            <span class="tag primary">Gulab Jamun</span>
-            <span class="tag primary">Khoya Sweets</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;">
-            <div>
-              <div style="font-size:10.5px;color:var(--text-secondary);">Expected Wage:</div>
-              <div style="font-size:14px;font-weight:800;color:var(--primary-dark);">₹18,000 / Month</div>
-            </div>
-            <div style="display:flex;gap:6px;">
-              <button class="btn-primary" style="padding:7px 12px;font-size:11.5px;width:auto;" onclick="goToScreen('screen-karigar-profile')">
-                View Profile
-              </button>
-              <button class="btn-outline" style="padding:7px 10px;font-size:11.5px;width:auto;" onclick="alert('Ramesh Kumar added to your shortlist!');">
-                Shortlist
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Karigar 2 -->
-        <div class="card">
-          <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
-            <div class="karigar-avatar" style="background:#DCFCE7;color:var(--accent-green);">SY</div>
-            <div style="flex:1;">
-              <div style="display:flex;justify-content:space-between;align-items:center;">
-                <b style="font-size:15px;">Suresh Yadav</b>
-                <span class="tag green"><i class="fa-solid fa-check"></i> Verified</span>
-              </div>
-              <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">
-                Halwai & Chaat Master • 5 Yrs • Kidwai Nagar
-              </div>
-            </div>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0;">
-            <span class="tag primary">Kaju Katli</span>
-            <span class="tag primary">Aloo Tikki Chaat</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;">
-            <div>
-              <div style="font-size:10.5px;color:var(--text-secondary);">Expected Wage:</div>
-              <div style="font-size:14px;font-weight:800;color:var(--primary-dark);">₹16,000 / Month</div>
-            </div>
-            <button class="btn-primary" style="padding:7px 12px;font-size:11.5px;width:auto;" onclick="goToScreen('screen-karigar-profile')">
-              View Profile
-            </button>
-          </div>
+        <!-- Dynamic Karigar Cards List -->
+        <div id="karigarsListContainer">
+          <!-- Populated by JavaScript -->
         </div>
       </div>
 
@@ -920,26 +1044,23 @@
         </div>
 
         <div class="card" style="text-align:center;">
-          <div class="karigar-avatar" style="width:64px;height:64px;font-size:24px;margin:0 auto 8px auto;">RK</div>
-          <h2 style="font-size:18px;font-weight:800;">Ramesh Kumar</h2>
-          <p style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Master Halwai • 8 Years Experience</p>
+          <div id="profileAvatar" class="karigar-avatar" style="width:64px;height:64px;font-size:24px;margin:0 auto 8px auto;">RK</div>
+          <h2 id="profileName" style="font-size:18px;font-weight:800;">Ramesh Kumar</h2>
+          <p id="profileCraftExp" style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Master Halwai • 8 Years Experience</p>
 
           <div style="display:flex;justify-content:center;gap:6px;margin:10px 0;">
-            <span class="tag primary">Govind Nagar, Kanpur</span>
-            <span class="tag green">Available Immediately</span>
+            <span id="profileLocalityTag" class="tag primary">Govind Nagar, Kanpur</span>
+            <span id="profileStatusTag" class="tag green">Available Immediately</span>
           </div>
 
           <div style="border-top:1px solid #F5F5F4;padding-top:10px;text-align:left;">
             <div style="font-size:11.5px;font-weight:700;color:var(--text-secondary);margin-bottom:5px;">Specialty Dishes:</div>
-            <div style="display:flex;flex-wrap:wrap;gap:5px;">
-              <span class="tag">Pure Desi Ghee Jalebi</span>
-              <span class="tag">Gulab Jamun</span>
-              <span class="tag">Mawa Barfi</span>
-              <span class="tag">Shahi Samosa</span>
+            <div id="profileSpecialtiesChips" style="display:flex;flex-wrap:wrap;gap:5px;">
+              <!-- Populated by JS -->
             </div>
 
             <div style="font-size:11.5px;font-weight:700;color:var(--text-secondary);margin:10px 0 3px 0;">Expected Wage:</div>
-            <div style="font-size:16px;font-weight:800;color:var(--primary-dark);">₹18,000 / Month (or ₹1,500/Day)</div>
+            <div id="profileWage" style="font-size:16px;font-weight:800;color:var(--primary-dark);">₹18,000 / Month (or ₹1,500/Day)</div>
           </div>
         </div>
 
@@ -957,10 +1078,10 @@
         </div>
 
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <button class="btn-primary" onclick="alert('Contact request sent! Our Kanpur Admin team will connect you to Ramesh Kumar within 15 minutes.'); goToScreen('screen-admin-panel');">
+          <button class="btn-primary" onclick="openBookingModalForSelected()">
             <i class="fa-solid fa-headset"></i> Connect via Admin (Free)
           </button>
-          <button class="btn-outline" onclick="alert('Ramesh Kumar shortlisted!');">
+          <button id="profileShortlistBtn" class="btn-outline" onclick="toggleShortlistSelected()">
             <i class="fa-solid fa-bookmark"></i> Shortlist Profile
           </button>
         </div>
@@ -977,7 +1098,7 @@
 
         <div class="card">
           <div style="text-align:center;margin-bottom:12px;">
-            <div style="width:60px;height:60px;border-radius:50%;background:#F5F5F4;border:2px dashed #D6D3D1;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;" onclick="alert('Camera / Gallery opened')">
+            <div id="workerPhotoPreview" style="width:60px;height:60px;border-radius:50%;background:#F5F5F4;border:2px dashed #D6D3D1;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;" onclick="triggerPhotoUpload()">
               <i class="fa-solid fa-camera" style="font-size:20px;color:#A8A29E;"></i>
             </div>
             <span style="font-size:10.5px;color:var(--primary);font-weight:700;margin-top:5px;display:block;">Upload Photo or Selfie</span>
@@ -985,12 +1106,12 @@
 
           <div class="input-group">
             <label class="input-label">Full Name</label>
-            <input type="text" class="input-field" value="Suresh Kumar Kashyap">
+            <input id="workerNameInput" type="text" class="input-field" value="Suresh Kumar Kashyap">
           </div>
 
           <div class="input-group">
             <label class="input-label">Primary Craft Specialization</label>
-            <select class="input-field" style="background:#FFF;">
+            <select id="workerCraftSelect" class="input-field" style="background:#FFF;">
               <option selected>Halwai (Sweets & Snacks Specialist)</option>
               <option>Bawarchi (Curries, Rice & Gravies)</option>
               <option>Tandoor & Roti Master</option>
@@ -1000,16 +1121,16 @@
 
           <div class="input-group">
             <label class="input-label">Years of Experience</label>
-            <input type="number" class="input-field" value="5">
+            <input id="workerExpInput" type="number" class="input-field" value="5">
           </div>
 
           <div class="input-group" style="margin-bottom:0;">
             <label class="input-label">Expected Monthly Wage (₹)</label>
-            <input type="text" class="input-field" value="₹16,000 / Month">
+            <input id="workerWageInput" type="text" class="input-field" value="₹16,000 / Month">
           </div>
         </div>
 
-        <button class="btn-primary" onclick="goToScreen('screen-karigar-feed')">
+        <button class="btn-primary" onclick="submitWorkerReg()">
           Complete Profile & Start Working <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
@@ -1019,60 +1140,23 @@
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
           <div>
             <div style="font-size:11.5px;color:var(--text-secondary);">Welcome,</div>
-            <div style="font-size:17px;font-weight:800;">Suresh Karigar</div>
+            <div id="workerGreetingName" style="font-size:17px;font-weight:800;">Suresh Karigar</div>
           </div>
           <span class="tag green"><i class="fa-solid fa-circle"></i> Available for Work</span>
         </div>
 
         <!-- Monthly Earnings -->
         <div class="card" style="background:linear-gradient(135deg, #1C1917 0%, #292524 100%);color:#FFF;padding:12px;">
-          <div style="font-size:11.5px;opacity:0.8;">Earnings This Month (October)</div>
-          <div style="font-size:24px;font-weight:800;color:#FDE047;margin:3px 0;">₹24,800</div>
-          <div style="font-size:10.5px;opacity:0.85;">14 Catering Gigs Completed • 4.9 ⭐ Rating</div>
+          <div style="font-size:11.5px;opacity:0.8;">Earnings This Month (November)</div>
+          <div id="workerEarningsNum" style="font-size:24px;font-weight:800;color:#FDE047;margin:3px 0;">₹24,800</div>
+          <div id="workerGigsDone" style="font-size:10.5px;opacity:0.85;">14 Catering Gigs Completed • 4.9 ⭐ Rating</div>
         </div>
 
         <h3 style="font-size:14px;font-weight:800;margin:12px 0 6px 0;">Nearby Open Gigs in Kanpur</h3>
 
-        <!-- Gig 1 -->
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div>
-              <span class="tag primary">Wedding Order • 3 Days</span>
-              <div style="font-size:15px;font-weight:800;margin-top:4px;">Sharma Sweets & Caterers</div>
-              <div style="font-size:11.5px;color:var(--text-secondary);">Kidwai Nagar, Kanpur (2.4 km)</div>
-            </div>
-            <div style="text-align:right;">
-              <div style="font-size:15px;font-weight:800;color:var(--primary-dark);">₹1,800</div>
-              <div style="font-size:10.5px;color:var(--text-secondary);">Per Day</div>
-            </div>
-          </div>
-          <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:11.5px;color:#16A34A;font-weight:700;"><i class="fa-solid fa-bowl-food"></i> Meals Included</span>
-            <button class="btn-primary" style="padding:6px 12px;font-size:11.5px;width:auto;" onclick="alert('Application submitted! Sharma Sweets will contact you through Admin.'); goToScreen('screen-whatsapp-chat');">
-              Quick Apply <i class="fa-solid fa-paper-plane"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Gig 2 -->
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div>
-              <span class="tag">Full Time Job</span>
-              <div style="font-size:15px;font-weight:800;margin-top:4px;">Royal Dhaba & Restaurant</div>
-              <div style="font-size:11.5px;color:var(--text-secondary);">Govind Nagar, Kanpur (3.8 km)</div>
-            </div>
-            <div style="text-align:right;">
-              <div style="font-size:15px;font-weight:800;color:var(--primary-dark);">₹16,000</div>
-              <div style="font-size:10.5px;color:var(--text-secondary);">Per Month</div>
-            </div>
-          </div>
-          <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:11.5px;color:#16A34A;font-weight:700;"><i class="fa-solid fa-clock"></i> 9 Hr Shift</span>
-            <button class="btn-primary" style="padding:6px 12px;font-size:11.5px;width:auto;" onclick="alert('Applied for Royal Dhaba!')">
-              Apply Now
-            </button>
-          </div>
+        <!-- Gigs List Container -->
+        <div id="karigarGigsList">
+          <!-- Populated by JS -->
         </div>
       </div>
 
@@ -1084,61 +1168,46 @@
         </div>
         <h2 style="font-size:19px;font-weight:800;margin-bottom:12px;">Notifications</h2>
 
-        <div class="card" style="border-left:4px solid var(--accent-green);">
-          <div style="display:flex;gap:10px;">
-            <i class="fa-solid fa-circle-check" style="color:var(--accent-green);font-size:18px;margin-top:2px;"></i>
-            <div style="flex:1;">
-              <div style="font-size:13.5px;font-weight:800;">Sharma Sweets Shortlisted You</div>
-              <div style="font-size:11.5px;color:var(--text-secondary);margin:2px 0 6px 0;">Master Halwai role • 14 Feb Wedding Order</div>
-              <button class="btn-primary" style="padding:6px 12px;font-size:11px;width:auto;" onclick="goToScreen('screen-whatsapp-chat')">
-                Open WhatsApp Broadcast
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="border-left:4px solid var(--primary);">
-          <div style="display:flex;gap:10px;">
-            <i class="fa-solid fa-bullhorn" style="color:var(--primary);font-size:18px;margin-top:2px;"></i>
-            <div>
-              <div style="font-size:13.5px;font-weight:800;">New Requirement Posted in Kidwai Nagar</div>
-              <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">2 Halwai needed • ₹18,000/Month</div>
-              <span style="font-size:10.5px;color:#A8A29E;display:block;margin-top:4px;">15 mins ago</span>
-            </div>
-          </div>
+        <div id="notificationsContainer">
+          <!-- Populated by JS -->
         </div>
       </div>
 
       <!-- ================= SCREEN 13: WHATSAPP CHAT ================= -->
       <div id="screen-whatsapp-chat" class="app-screen">
         <div style="background:#075E54;color:#FFF;padding:10px;border-radius:12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <button onclick="goToScreen('screen-dashboard')" style="background:none;border:none;color:#FFF;cursor:pointer;font-size:14px;"><i class="fa-solid fa-arrow-left"></i></button>
           <i class="fa-brands fa-whatsapp" style="font-size:22px;color:#25D366;"></i>
-          <div>
+          <div style="flex:1;">
             <div style="font-size:13.5px;font-weight:800;">Karigar Mitra Kanpur (Bot)</div>
-            <div style="font-size:10.5px;opacity:0.85;">Official Worker Dispatch Channel</div>
+            <div style="font-size:10.5px;opacity:0.85;">Official Worker Dispatch Channel • Online</div>
           </div>
         </div>
 
-        <!-- Bot Broadcast -->
-        <div class="card" style="font-size:12.5px;line-height:1.4;margin-bottom:8px;">
-          <b>New Requirement Broadcast:</b><br>
-          Sharma Sweets, Kidwai Nagar<br>
-          Halwai Karigar • <b>₹18,000 / Month</b><br>
-          Experience: 3+ Years • Full Time<br><br>
-          👉 If interested in this gig, reply <b>1</b>.
+        <!-- Chat Messages Container -->
+        <div id="chatMessagesContainer" style="min-height:220px;margin-bottom:12px;">
+          <!-- Populated dynamically -->
         </div>
 
-        <!-- Worker 1 reply -->
-        <div style="background:#DCF8C6;padding:8px 16px;border-radius:12px 12px 0 12px;width:fit-content;margin-left:auto;margin-bottom:8px;font-weight:800;font-size:15px;">
-          1
+        <!-- Quick Reply Action Chips -->
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <button onclick="sendQuickReply('1')" style="background:#FFF;border:1.5px solid #25D366;color:#075E54;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800;cursor:pointer;">
+            Reply 1 (Accept Gig)
+          </button>
+          <button onclick="sendQuickReply('2')" style="background:#FFF;border:1px solid #D6D3D1;color:#78716C;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;">
+            Reply 2 (Not Available)
+          </button>
         </div>
 
-        <!-- Bot Response -->
-        <div class="card" style="font-size:12.5px;line-height:1.4;">
-          ✅ <b>Thank you!</b> Our Kanpur Admin Team has notified the employer and will call you shortly on your phone to connect both parties.
+        <!-- Chat Input Bar -->
+        <div style="display:flex;gap:6px;align-items:center;background:#FFF;border:1.5px solid #E7E5E4;border-radius:12px;padding:4px 8px;">
+          <input id="chatTextInput" type="text" placeholder="Type a message or 1 to accept..." style="border:none;outline:none;width:100%;font-size:13px;padding:6px;" onkeydown="if(event.key==='Enter') sendChatMessage()">
+          <button onclick="sendChatMessage()" style="background:#25D366;color:#FFF;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <i class="fa-solid fa-paper-plane" style="font-size:12px;"></i>
+          </button>
         </div>
 
-        <button class="btn-primary" style="margin-top:14px;" onclick="goToScreen('screen-admin-panel')">
+        <button class="btn-primary" style="margin-top:14px;background:#44403C;box-shadow:none;" onclick="goToScreen('screen-admin-panel')">
           View in Admin Matching Portal <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
@@ -1152,25 +1221,25 @@
         <h2 style="font-size:19px;font-weight:800;margin-bottom:12px;">My Profile & Settings</h2>
 
         <div class="card" style="text-align:center;">
-          <div class="karigar-avatar" style="width:60px;height:60px;font-size:22px;margin:0 auto 8px auto;">SS</div>
-          <div style="font-size:17px;font-weight:800;">Sharma Sweets & Caterers</div>
-          <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">Kidwai Nagar, Kanpur • Member since 2024</div>
+          <div id="myAccountAvatar" class="karigar-avatar" style="width:60px;height:60px;font-size:22px;margin:0 auto 8px auto;">SS</div>
+          <div id="myAccountTitle" style="font-size:17px;font-weight:800;">Sharma Sweets & Caterers</div>
+          <div id="myAccountSubtitle" style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">Kidwai Nagar, Kanpur • Member since 2024</div>
         </div>
 
         <div class="card">
           <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F5F5F4;cursor:pointer;" onclick="goToScreen('screen-lang')">
-            <span style="font-size:13px;"><i class="fa-solid fa-language" style="color:var(--primary);margin-right:8px;"></i> App Language (English)</span>
+            <span style="font-size:13px;"><i class="fa-solid fa-language" style="color:var(--primary);margin-right:8px;"></i> App Language (<b id="currentLangLabel">English</b>)</span>
             <i class="fa-solid fa-chevron-right" style="color:#A8A29E;font-size:12px;"></i>
           </div>
           <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F5F5F4;cursor:pointer;" onclick="goToScreen('screen-admin-panel')">
             <span style="font-size:13px;"><i class="fa-solid fa-user-gear" style="color:var(--secondary);margin-right:8px;"></i> Admin Dispatch Portal</span>
-            <i class="fa-solid fa-chevron-right" style="color:#A8A29E;font-size:12px;"></i>
+            <span class="tag green" style="font-size:9.5px;">Operator Desk</span>
           </div>
-          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F5F5F4;">
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F5F5F4;cursor:pointer;" onclick="callHelpline()">
             <span style="font-size:13px;"><i class="fa-solid fa-phone" style="color:var(--accent-green);margin-right:8px;"></i> Kanpur Support Helpline</span>
-            <b style="font-size:13px;">0512-233-XXXX</b>
+            <b style="font-size:13px;color:var(--accent-green);">0512-233-0192</b>
           </div>
-          <div style="display:flex;justify-content:space-between;padding:10px 0;cursor:pointer;" onclick="goToScreen('screen-splash')">
+          <div style="display:flex;justify-content:space-between;padding:10px 0;cursor:pointer;" onclick="logOutUser()">
             <span style="color:#DC2626;font-weight:700;font-size:13px;"><i class="fa-solid fa-right-from-bracket" style="margin-right:8px;"></i> Log Out</span>
           </div>
         </div>
@@ -1180,37 +1249,25 @@
       <div id="screen-admin-panel" class="app-screen">
         <div style="background:#1C1917;color:#FFF;padding:10px;border-radius:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
           <span style="font-size:12.5px;font-weight:800;"><i class="fa-solid fa-shield-halved" style="color:var(--primary);"></i> Admin Operations Portal</span>
-          <span class="tag green" style="font-size:9.5px;">Internal Only</span>
+          <span class="tag green" style="font-size:9.5px;">Live Dispatch</span>
         </div>
 
-        <div class="card" style="border-left:4px solid var(--primary);">
-          <div style="font-size:12.5px;font-weight:800;margin-bottom:5px;">Pending Match Request #101</div>
-          <div style="font-size:11.5px;color:#44403C;line-height:1.45;">
-            <b>Employer:</b> Sharma Sweets & Caterers<br>
-            <b>Candidate:</b> Ramesh Kumar (Halwai, 8 Yrs Exp)<br>
-            <b>Status:</b> Requested direct contact
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;">
-            <button class="btn-primary" style="padding:6px 10px;font-size:10.5px;width:auto;" onclick="alert('Calling Karigar Ramesh Kumar at +91-98390XXXXX...');">
-              <i class="fa-solid fa-phone"></i> Call Karigar
-            </button>
-            <button class="btn-whatsapp" style="padding:6px 10px;font-size:10.5px;width:auto;" onclick="alert('Connecting Sharma Sweets with Ramesh Kumar!');">
-              Connect Employer
-            </button>
-          </div>
+        <div style="font-size:13px;font-weight:800;margin-bottom:8px;color:#1C1917;">Pending Artisan Match Requests</div>
+        <div id="adminLeadsContainer">
+          <!-- Populated by JS -->
         </div>
 
-        <div class="card">
-          <div style="font-size:12.5px;font-weight:800;margin-bottom:5px;">Incoming WhatsApp Leads</div>
+        <div class="card" style="margin-top:12px;">
+          <div style="font-size:13px;font-weight:800;margin-bottom:6px;">Incoming WhatsApp Artisan Inquiries</div>
           <p style="font-size:11.5px;color:var(--text-secondary);line-height:1.35;">
-            +91-97XXXXXX21: <i>"Chinese cook with 5 yrs dhaba experience, looking for orders in Swaroop Nagar."</i>
+            +91-97931-XXXXX: <i>"Chinese & Tandoor cook with 5 yrs experience looking for catering orders in Swaroop Nagar."</i>
           </p>
           <button class="btn-primary" style="padding:6px 10px;font-size:10.5px;margin-top:6px;background:#44403C;box-shadow:none;width:auto;" onclick="goToScreen('screen-karigar-reg')">
-            + Create Worker Profile
+            + Convert to Worker Profile
           </button>
         </div>
 
-        <button class="btn-outline" style="margin-top:6px;" onclick="goToScreen('screen-dashboard')">
+        <button class="btn-outline" style="margin-top:8px;" onclick="goToScreen('screen-dashboard')">
           ← Exit Admin & Return to App
         </button>
       </div>
@@ -1242,21 +1299,256 @@
     </div>
   </div>
 
+  <!-- APPLICATION STATE & CONTROLLER -->
   <script>
-    function updateClock() {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const el = document.getElementById('statusTime');
-      if (el) el.textContent = `${hours}:${minutes}`;
+    // --- APP STATE & DUMMY DATABASE ---
+    const APP_STATE = {
+      currentUser: {
+        role: 'employer',
+        name: 'Rajesh Sharma',
+        businessName: 'Sharma Sweets & Caterers',
+        category: 'Sweet Shop',
+        locality: 'Kidwai Nagar, Kanpur'
+      },
+      currentWorker: {
+        name: 'Suresh Kumar Kashyap',
+        craft: 'Halwai (Sweets & Snacks Specialist)',
+        experience: 5,
+        wage: '₹16,000 / Month',
+        earnings: 24800,
+        gigsCount: 14
+      },
+      selectedLanguage: 'English',
+      selectedKarigarId: 'k1',
+      activeCategoryFilter: 'All Artisans',
+      searchQuery: '',
+      callInterval: null,
+      callSeconds: 0,
+      karigars: [
+        {
+          id: 'k1',
+          name: 'Ramesh Kumar',
+          initials: 'RK',
+          avatarColor: '#FFE5D9',
+          avatarTextColor: '#F05A28',
+          craft: 'Halwai',
+          experience: '8 Yrs Experience',
+          locality: 'Govind Nagar (2.4 km)',
+          specialties: ['Desi Ghee Jalebi', 'Gulab Jamun', 'Khoya Sweets', 'Mawa Barfi', 'Shahi Samosa'],
+          wageMonthly: '₹18,000 / Month',
+          wageDaily: '₹1,500 / Day',
+          rating: 4.9,
+          verified: true,
+          isShortlisted: false,
+          phone: '+91 98390 14821'
+        },
+        {
+          id: 'k2',
+          name: 'Suresh Yadav',
+          initials: 'SY',
+          avatarColor: '#DCFCE7',
+          avatarTextColor: '#16A34A',
+          craft: 'Halwai',
+          subCraft: 'Chaat Master',
+          experience: '5 Yrs Experience',
+          locality: 'Kidwai Nagar (1.1 km)',
+          specialties: ['Kaju Katli', 'Special Aloo Tikki Chaat', 'Papdi Chaat', 'Gol Gappe Paani'],
+          wageMonthly: '₹16,000 / Month',
+          wageDaily: '₹1,200 / Day',
+          rating: 4.8,
+          verified: true,
+          isShortlisted: false,
+          phone: '+91 94150 88219'
+        },
+        {
+          id: 'k3',
+          name: 'Aslam Khan Bawarchi',
+          initials: 'AK',
+          avatarColor: '#FEF3C7',
+          avatarTextColor: '#D97706',
+          craft: 'Bawarchi',
+          experience: '12 Yrs Experience',
+          locality: 'Chamanganj (3.1 km)',
+          specialties: ['Awadhi Dum Biryani', 'Mutton Korma', 'Galouti Kebab', 'Shahi Tukda', 'Nihari'],
+          wageMonthly: '₹22,000 / Month',
+          wageDaily: '₹2,000 / Day',
+          rating: 5.0,
+          verified: true,
+          isShortlisted: false,
+          phone: '+91 98381 40023'
+        },
+        {
+          id: 'k4',
+          name: 'Munna Lal Tandooriya',
+          initials: 'ML',
+          avatarColor: '#F3E8FF',
+          avatarTextColor: '#9333EA',
+          craft: 'Tandoor Cook',
+          experience: '6 Yrs Experience',
+          locality: 'Gumti No. 5 (1.8 km)',
+          specialties: ['Butter Naan', 'Rumali Roti', 'Tandoori Roti', 'Paneer Tikka', 'Tandoori Chaap'],
+          wageMonthly: '₹15,000 / Month',
+          wageDaily: '₹1,100 / Day',
+          rating: 4.7,
+          verified: true,
+          isShortlisted: false,
+          phone: '+91 97931 55012'
+        },
+        {
+          id: 'k5',
+          name: 'Chhotu Pandit Chaat',
+          initials: 'CP',
+          avatarColor: '#FFE4E6',
+          avatarTextColor: '#E11D48',
+          craft: 'Chaat Master',
+          experience: '9 Yrs Experience',
+          locality: 'Birhana Road (4.0 km)',
+          specialties: ['Kanpuri Matar Chaat', 'Dahi Gujiya Chaat', 'Palak Chaat', 'Katori Chaat'],
+          wageMonthly: '₹17,000 / Month',
+          wageDaily: '₹1,400 / Day',
+          rating: 4.9,
+          verified: true,
+          isShortlisted: false,
+          phone: '+91 93361 77291'
+        },
+        {
+          id: 'k6',
+          name: 'Deepak Sahu Halwai',
+          initials: 'DS',
+          avatarColor: '#E0E7FF',
+          avatarTextColor: '#4F46E5',
+          craft: 'Halwai',
+          experience: '4 Yrs Experience',
+          locality: 'Swaroop Nagar (2.9 km)',
+          specialties: ['Rasgulla', 'Kaju Roll', 'Motichoor Ladoo', 'Dhokla & Khandvi'],
+          wageMonthly: '₹15,500 / Month',
+          wageDaily: '₹1,100 / Day',
+          rating: 4.6,
+          verified: true,
+          isShortlisted: false,
+          phone: '+91 98399 22019'
+        }
+      ],
+      requirements: [
+        {
+          id: 'req-1',
+          title: 'Master Halwai • 2 Openings',
+          locality: 'Kidwai Nagar',
+          wage: '₹18,000/Month',
+          type: 'Wedding Order',
+          appliedCount: 8,
+          shortlistedCount: 3
+        },
+        {
+          id: 'req-2',
+          title: 'Tandoor & Roti Master • 1 Opening',
+          locality: 'Swaroop Nagar',
+          wage: '₹15,000/Month',
+          type: 'Full Time',
+          appliedCount: 4,
+          shortlistedCount: 1
+        }
+      ],
+      gigs: [
+        {
+          id: 'gig-1',
+          employer: 'Sharma Sweets & Caterers',
+          locality: 'Kidwai Nagar, Kanpur (2.4 km)',
+          wage: '₹1,800',
+          wageUnit: 'Per Day',
+          tag: 'Wedding Order • 3 Days',
+          perks: 'Meals Included',
+          applied: false
+        },
+        {
+          id: 'gig-2',
+          employer: 'Royal Dhaba & Restaurant',
+          locality: 'Govind Nagar, Kanpur (3.8 km)',
+          wage: '₹16,000',
+          wageUnit: 'Per Month',
+          tag: 'Full Time Job',
+          perks: '9 Hr Shift',
+          applied: false
+        },
+        {
+          id: 'gig-3',
+          employer: 'Milan Caterers & Tent House',
+          locality: 'Civil Lines, Kanpur (4.5 km)',
+          wage: '₹2,200',
+          wageUnit: 'Per Day',
+          tag: 'Reception Party (2 Days)',
+          perks: 'Night Stay + Meals',
+          applied: false
+        }
+      ],
+      adminLeads: [
+        {
+          id: 'lead-101',
+          employer: 'Sharma Sweets & Caterers',
+          candidate: 'Ramesh Kumar (Halwai, 8 Yrs Exp)',
+          status: 'Requested direct contact',
+          phone: '+91-98390-14821',
+          connected: false
+        },
+        {
+          id: 'lead-102',
+          employer: 'Royal Dhaba Swaroop Nagar',
+          candidate: 'Munna Lal (Tandoor Master)',
+          status: 'Immediate shift required',
+          phone: '+91-97931-55012',
+          connected: false
+        }
+      ],
+      notifications: [
+        {
+          id: 'notif-1',
+          icon: 'fa-circle-check',
+          color: 'var(--accent-green)',
+          title: 'Sharma Sweets Shortlisted You',
+          desc: 'Master Halwai role • 14 Feb Wedding Order',
+          actionText: 'Open WhatsApp Broadcast',
+          actionScreen: 'screen-whatsapp-chat'
+        },
+        {
+          id: 'notif-2',
+          icon: 'fa-bullhorn',
+          color: 'var(--primary)',
+          title: 'New Requirement in Kidwai Nagar',
+          desc: '2 Halwai needed • ₹18,000/Month • 15 mins ago',
+          actionText: 'View Karigars',
+          actionScreen: 'screen-search'
+        }
+      ],
+      chatMessages: [
+        {
+          type: 'bot',
+          html: '<b>New Requirement Broadcast:</b><br>Sharma Sweets, Kidwai Nagar<br>Halwai Karigar • <b>₹18,000 / Month</b><br>Experience: 3+ Years • Full Time<br><br>👉 If interested in this gig, reply <b>1</b>.'
+        },
+        {
+          type: 'user',
+          text: '1'
+        },
+        {
+          type: 'bot',
+          html: '✅ <b>Thank you!</b> Our Kanpur Admin Team has notified the employer and will call you shortly on your phone to connect both parties.'
+        }
+      ]
+    };
+
+    // --- TOAST HELPER ---
+    function showToast(message, icon = 'fa-circle-check', iconColor = '#22C55E') {
+      const toast = document.getElementById('appToast');
+      const msg = document.getElementById('toastMsg');
+      toast.innerHTML = `<i class="fa-solid ${icon}" style="color:${iconColor};"></i> <span>${message}</span>`;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 2600);
     }
 
+    // --- NAVIGATION LOGIC ---
     function goToScreen(screenId) {
-      // Hide all screens
       const screens = document.querySelectorAll('.app-screen');
       screens.forEach(s => s.classList.remove('active'));
 
-      // Show target screen
       const target = document.getElementById(screenId);
       if (target) {
         target.classList.add('active');
@@ -1264,11 +1556,10 @@
         if (viewport) viewport.scrollTop = 0;
       }
 
-      // Sync the top dropdown selector
       const select = document.getElementById('screenSelect');
       if (select) select.value = screenId;
 
-      // Sync status bar color (white on splash, dark on others)
+      // Status bar color handling
       const statusTime = document.getElementById('statusTime');
       const statusIcons = document.getElementById('statusIcons');
       if (screenId === 'screen-splash') {
@@ -1279,7 +1570,7 @@
         if (statusIcons) statusIcons.style.color = '#1C1917';
       }
 
-      // Show/Hide bottom navigation footer based on screen need
+      // Show/Hide bottom nav based on screen
       const screensWithNav = [
         'screen-dashboard',
         'screen-search',
@@ -1300,7 +1591,7 @@
         }
       }
 
-      // Sync the bottom nav bar highlight
+      // Sync active tab highlight
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(n => n.classList.remove('active'));
       if (screenId === 'screen-dashboard') navItems[0].classList.add('active');
@@ -1308,12 +1599,623 @@
       if (screenId === 'screen-post-job') navItems[2].classList.add('active');
       if (screenId === 'screen-notifications' || screenId === 'screen-whatsapp-chat') navItems[3].classList.add('active');
       if (screenId === 'screen-my-profile' || screenId === 'screen-admin-panel') navItems[4].classList.add('active');
+
+      // Refresh dynamic content for target screen
+      if (screenId === 'screen-search') renderKarigars();
+      if (screenId === 'screen-dashboard') renderDashboardRequirements();
+      if (screenId === 'screen-karigar-profile') renderKarigarProfile(APP_STATE.selectedKarigarId);
+      if (screenId === 'screen-karigar-feed') renderKarigarFeed();
+      if (screenId === 'screen-notifications') renderNotifications();
+      if (screenId === 'screen-whatsapp-chat') renderChatMessages();
+      if (screenId === 'screen-admin-panel') renderAdminLeads();
     }
 
-    // Initialize to Splash screen on load and start live clock
+    // --- LANGUAGE SELECTION ---
+    function selectLanguage(lang) {
+      APP_STATE.selectedLanguage = lang;
+      const cardEn = document.getElementById('langCardEn');
+      const cardHi = document.getElementById('langCardHi');
+      const checkEn = document.getElementById('langCheckEn');
+      const checkHi = document.getElementById('langCheckHi');
+      const label = document.getElementById('currentLangLabel');
+      if (label) label.textContent = lang;
+
+      if (lang === 'English') {
+        cardEn.style.border = '2px solid var(--primary)';
+        cardEn.style.background = 'var(--primary-light)';
+        cardEn.style.opacity = '1';
+        checkEn.className = 'fa-solid fa-circle-check';
+        checkEn.style.color = 'var(--primary)';
+
+        cardHi.style.border = '1px solid var(--border-light)';
+        cardHi.style.background = '#FFF';
+        cardHi.style.opacity = '0.75';
+        checkHi.className = 'fa-regular fa-circle';
+        checkHi.style.color = '#D6D3D1';
+      } else {
+        cardHi.style.border = '2px solid var(--primary)';
+        cardHi.style.background = 'var(--primary-light)';
+        cardHi.style.opacity = '1';
+        checkHi.className = 'fa-solid fa-circle-check';
+        checkHi.style.color = 'var(--primary)';
+
+        cardEn.style.border = '1px solid var(--border-light)';
+        cardEn.style.background = '#FFF';
+        cardEn.style.opacity = '0.75';
+        checkEn.className = 'fa-regular fa-circle';
+        checkEn.style.color = '#D6D3D1';
+      }
+      showToast(`Language set to ${lang}`);
+    }
+
+    // --- OTP & LOGIN ---
+    function handleOtpInput(input, nextIndex) {
+      if (input.value.length === 1 && nextIndex) {
+        const boxes = document.querySelectorAll('.otp-box');
+        if (boxes[nextIndex]) boxes[nextIndex].focus();
+      }
+    }
+    function verifyLoginOtp() {
+      showToast('Verified successfully! Welcome.');
+      setTimeout(() => goToScreen('screen-role'), 400);
+    }
+    function quickLoginWhatsApp() {
+      showToast('Logged in via WhatsApp (+91-9839012345)');
+      setTimeout(() => goToScreen('screen-dashboard'), 400);
+    }
+    function selectRole(role) {
+      APP_STATE.currentUser.role = role;
+      if (role === 'employer') {
+        goToScreen('screen-employer-reg');
+      } else {
+        goToScreen('screen-karigar-reg');
+      }
+    }
+
+    // --- EMPLOYER REGISTRATION ---
+    function toggleCategoryChip(chip) {
+      chip.classList.toggle('selected');
+    }
+    function submitEmployerReg() {
+      const owner = document.getElementById('empOwnerInput').value.trim();
+      const shop = document.getElementById('empBusinessInput').value.trim();
+      const locality = document.getElementById('empLocalitySelect').value;
+      if (owner) APP_STATE.currentUser.name = owner;
+      if (shop) APP_STATE.currentUser.businessName = shop;
+      if (locality) APP_STATE.currentUser.locality = locality;
+
+      const title = document.getElementById('dashBusinessTitle');
+      if (title) title.textContent = `${APP_STATE.currentUser.businessName} 👋`;
+      const accTitle = document.getElementById('myAccountTitle');
+      if (accTitle) accTitle.textContent = APP_STATE.currentUser.businessName;
+
+      showToast('Business Profile created!');
+      setTimeout(() => goToScreen('screen-dashboard'), 400);
+    }
+
+    // --- WORKER REGISTRATION ---
+    function triggerPhotoUpload() {
+      showToast('📸 Photo captured & attached!');
+      const preview = document.getElementById('workerPhotoPreview');
+      preview.innerHTML = '<span style="font-weight:800;color:var(--primary);font-size:18px;">SK</span>';
+      preview.style.background = '#FFE5D9';
+      preview.style.borderColor = 'var(--primary)';
+    }
+    function submitWorkerReg() {
+      const name = document.getElementById('workerNameInput').value.trim();
+      const craft = document.getElementById('workerCraftSelect').value;
+      const exp = document.getElementById('workerExpInput').value;
+      const wage = document.getElementById('workerWageInput').value;
+
+      if (name) APP_STATE.currentWorker.name = name;
+      if (craft) APP_STATE.currentWorker.craft = craft;
+      if (exp) APP_STATE.currentWorker.experience = exp;
+      if (wage) APP_STATE.currentWorker.wage = wage;
+
+      const greet = document.getElementById('workerGreetingName');
+      if (greet) greet.textContent = APP_STATE.currentWorker.name;
+
+      showToast('Worker profile published!');
+      setTimeout(() => goToScreen('screen-karigar-feed'), 400);
+    }
+
+    // --- DASHBOARD RENDERING ---
+    function renderDashboardRequirements() {
+      const list = document.getElementById('dashboardRequirementsList');
+      if (!list) return;
+
+      const countLabel = document.getElementById('activeReqTitle');
+      if (countLabel) countLabel.textContent = `My Active Requirements (${APP_STATE.requirements.length})`;
+
+      const demandMetric = document.getElementById('metricActiveDemands');
+      if (demandMetric) demandMetric.textContent = APP_STATE.requirements.length.toString().padStart(2, '0');
+
+      // Update applicant count sum
+      const totalApplicants = APP_STATE.requirements.reduce((acc, r) => acc + r.appliedCount, 0);
+      const appMetric = document.getElementById('metricApplicants');
+      if (appMetric) appMetric.textContent = totalApplicants.toString().padStart(2, '0');
+
+      // Shortlisted count
+      const shortlistedCount = APP_STATE.karigars.filter(k => k.isShortlisted).length;
+      const shortMetric = document.getElementById('metricShortlisted');
+      if (shortMetric) shortMetric.textContent = shortlistedCount.toString().padStart(2, '0');
+
+      list.innerHTML = APP_STATE.requirements.map(req => `
+        <div class="card" style="border-left:4px solid var(--primary);cursor:pointer;" onclick="goToScreen('screen-search')">
+          <div style="display:flex;justify-content:space-between;">
+            <div>
+              <div style="font-size:14px;font-weight:800;">${req.title}</div>
+              <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">${req.locality} • ${req.wage}</div>
+            </div>
+            <span class="tag green">Active</span>
+          </div>
+          <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;font-size:11.5px;">
+            <span><i class="fa-solid fa-users" style="color:var(--primary);"></i> <b>${req.appliedCount} Applied</b></span>
+            <span><i class="fa-solid fa-bookmark" style="color:var(--secondary);"></i> <b>${req.shortlistedCount} Shortlisted</b></span>
+            <span style="color:var(--primary);font-weight:700;">View →</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function triggerSosBooking() {
+      APP_STATE.activeCategoryFilter = 'All Artisans';
+      showToast('⚡ SOS Filter Active: 30-Min Fast Dispatch');
+      goToScreen('screen-search');
+    }
+
+    function filterByAvailability(type) {
+      showToast('Showing shortlisted Karigars');
+      goToScreen('screen-search');
+    }
+
+    // --- POST JOB ACTIONS ---
+    function stepVacancy(delta) {
+      const input = document.getElementById('postJobVacancies');
+      let val = parseInt(input.value) || 1;
+      val = Math.max(1, Math.min(20, val + delta));
+      input.value = val;
+    }
+    function removeSkillChip(el) {
+      el.remove();
+    }
+    function addSkillChip() {
+      const input = document.getElementById('newSkillInput');
+      const val = input.value.trim();
+      if (!val) return;
+      const container = document.getElementById('postJobSkillChips');
+      const chip = document.createElement('span');
+      chip.className = 'tag primary removable';
+      chip.textContent = `${val} ✕`;
+      chip.onclick = function() { this.remove(); };
+      container.appendChild(chip);
+      input.value = '';
+    }
+    function selectDurationChip(el) {
+      document.querySelectorAll('#durationChips .tag').forEach(t => t.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+    function submitNewRequirement() {
+      const title = document.getElementById('postJobTitle').value.trim() || 'Food Artisan';
+      const vacancies = document.getElementById('postJobVacancies').value;
+      const salary = document.getElementById('postJobSalary').value.trim();
+      const salaryType = document.getElementById('postJobSalaryType').value;
+
+      const newReq = {
+        id: `req-${Date.now()}`,
+        title: `${title} • ${vacancies} Opening${vacancies > 1 ? 's' : ''}`,
+        locality: APP_STATE.currentUser.locality.split(',')[0],
+        wage: `${salary}/${salaryType}`,
+        type: 'Event / Shift',
+        appliedCount: 0,
+        shortlistedCount: 0
+      };
+
+      APP_STATE.requirements.unshift(newReq);
+
+      // Add to worker gigs feed
+      APP_STATE.gigs.unshift({
+        id: `gig-${Date.now()}`,
+        employer: APP_STATE.currentUser.businessName,
+        locality: APP_STATE.currentUser.locality,
+        wage: salary,
+        wageUnit: `Per ${salaryType}`,
+        tag: 'New Requirement',
+        perks: 'Meals Included',
+        applied: false
+      });
+
+      // Add activity notification
+      APP_STATE.notifications.unshift({
+        id: `notif-${Date.now()}`,
+        icon: 'fa-bullhorn',
+        color: 'var(--primary)',
+        title: `Your Requirement was Broadcasted!`,
+        desc: `${title} (${vacancies} openings) sent to local Kanpur Karigars`,
+        actionText: 'View Responses',
+        actionScreen: 'screen-dashboard'
+      });
+
+      showToast('🎉 Requirement Broadcasted to 2,500+ Artisans!');
+      setTimeout(() => goToScreen('screen-dashboard'), 600);
+    }
+
+    // --- SEARCH & FILTER KARIGARS ---
+    function selectSearchCategory(cat, el) {
+      APP_STATE.activeCategoryFilter = cat;
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderKarigars();
+    }
+    function filterKarigars() {
+      const input = document.getElementById('karigarSearchInput');
+      APP_STATE.searchQuery = input.value.trim().toLowerCase();
+      renderKarigars();
+    }
+    function simulateVoiceSearch() {
+      const input = document.getElementById('karigarSearchInput');
+      input.value = 'Jalebi';
+      APP_STATE.searchQuery = 'jalebi';
+      showToast('🎙️ Heard: "Desi Ghee Jalebi"');
+      renderKarigars();
+    }
+
+    function renderKarigars() {
+      const container = document.getElementById('karigarsListContainer');
+      if (!container) return;
+
+      let filtered = APP_STATE.karigars.filter(k => {
+        // Category filter
+        const matchCat = (APP_STATE.activeCategoryFilter === 'All Artisans') ||
+                         (k.craft === APP_STATE.activeCategoryFilter) ||
+                         (k.subCraft && k.subCraft === APP_STATE.activeCategoryFilter);
+
+        // Text query filter
+        const query = APP_STATE.searchQuery;
+        const matchQuery = !query || 
+                           k.name.toLowerCase().includes(query) ||
+                           k.craft.toLowerCase().includes(query) ||
+                           k.locality.toLowerCase().includes(query) ||
+                           k.specialties.some(s => s.toLowerCase().includes(query));
+
+        return matchCat && matchQuery;
+      });
+
+      const countBadge = document.getElementById('searchAvailableBadge');
+      if (countBadge) countBadge.textContent = `${filtered.length} Available in Kanpur`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="card" style="text-align:center;padding:28px 14px;">
+            <i class="fa-solid fa-magnifying-glass" style="font-size:28px;color:#D6D3D1;margin-bottom:8px;"></i>
+            <div style="font-weight:800;font-size:14px;">No artisans matched your search</div>
+            <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">Try searching "Halwai", "Biryani", "Tandoor" or tap All Artisans</div>
+            <button class="btn-primary" style="margin-top:12px;font-size:12px;padding:8px;" onclick="selectSearchCategory('All Artisans', document.querySelector('.cat-pill'))">
+              Reset Filters
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(k => `
+        <div class="card">
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+            <div class="karigar-avatar" style="background:${k.avatarColor};color:${k.avatarTextColor};">${k.initials}</div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <b style="font-size:15px;cursor:pointer;" onclick="openKarigarProfile('${k.id}')">${k.name}</b>
+                ${k.verified ? '<span class="tag green"><i class="fa-solid fa-check"></i> Verified</span>' : ''}
+              </div>
+              <div style="font-size:11.5px;color:var(--text-secondary);margin-top:2px;">
+                ${k.craft} • ${k.experience} • ${k.locality}
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0;">
+            ${k.specialties.slice(0, 3).map(s => `<span class="tag primary">${s}</span>`).join('')}
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;">
+            <div>
+              <div style="font-size:10.5px;color:var(--text-secondary);">Expected Wage:</div>
+              <div style="font-size:14px;font-weight:800;color:var(--primary-dark);">${k.wageMonthly}</div>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn-primary" style="padding:7px 12px;font-size:11.5px;width:auto;" onclick="openKarigarProfile('${k.id}')">
+                View Profile
+              </button>
+              <button class="btn-outline" style="padding:7px 10px;font-size:11.5px;width:auto;${k.isShortlisted ? 'background:var(--primary-light);color:var(--primary);font-weight:800;' : ''}" onclick="toggleShortlist('${k.id}', this)">
+                ${k.isShortlisted ? '⭐ Shortlisted' : 'Shortlist'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleShortlist(id, btn) {
+      const k = APP_STATE.karigars.find(item => item.id === id);
+      if (!k) return;
+      k.isShortlisted = !k.isShortlisted;
+      if (k.isShortlisted) {
+        showToast(`⭐ ${k.name} added to your shortlist!`);
+      } else {
+        showToast(`${k.name} removed from shortlist`);
+      }
+      renderKarigars();
+      renderDashboardRequirements();
+    }
+
+    // --- KARIGAR PROFILE DETAIL ---
+    function openKarigarProfile(id) {
+      APP_STATE.selectedKarigarId = id;
+      goToScreen('screen-karigar-profile');
+    }
+    function renderKarigarProfile(id) {
+      const k = APP_STATE.karigars.find(item => item.id === id) || APP_STATE.karigars[0];
+      if (!k) return;
+
+      const avatar = document.getElementById('profileAvatar');
+      avatar.textContent = k.initials;
+      avatar.style.background = k.avatarColor;
+      avatar.style.color = k.avatarTextColor;
+
+      document.getElementById('profileName').textContent = k.name;
+      document.getElementById('profileCraftExp').textContent = `${k.craft} • ${k.experience} • ${k.rating} ⭐`;
+      document.getElementById('profileLocalityTag').textContent = k.locality;
+      document.getElementById('profileWage').textContent = `${k.wageMonthly} (or ${k.wageDaily})`;
+
+      const chips = document.getElementById('profileSpecialtiesChips');
+      chips.innerHTML = k.specialties.map(s => `<span class="tag">${s}</span>`).join('');
+
+      const btn = document.getElementById('profileShortlistBtn');
+      if (btn) {
+        btn.innerHTML = k.isShortlisted ? '<i class="fa-solid fa-bookmark" style="color:var(--primary);"></i> Shortlisted ⭐' : '<i class="fa-solid fa-bookmark"></i> Shortlist Profile';
+      }
+    }
+    function toggleShortlistSelected() {
+      const k = APP_STATE.karigars.find(item => item.id === APP_STATE.selectedKarigarId);
+      if (!k) return;
+      k.isShortlisted = !k.isShortlisted;
+      renderKarigarProfile(k.id);
+      showToast(k.isShortlisted ? `⭐ ${k.name} shortlisted!` : `${k.name} removed`);
+      renderDashboardRequirements();
+    }
+
+    // --- ADMIN MATCH MODAL ---
+    function openBookingModalForSelected() {
+      const k = APP_STATE.karigars.find(item => item.id === APP_STATE.selectedKarigarId);
+      if (!k) return;
+      document.getElementById('modalArtisanTitle').textContent = `Connect with ${k.name}`;
+      document.getElementById('bookingModal').classList.add('active');
+    }
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.remove('active');
+    }
+    function submitBookingRequest() {
+      const k = APP_STATE.karigars.find(item => item.id === APP_STATE.selectedKarigarId);
+      const shift = document.getElementById('bookingShiftSelect').value;
+      const notes = document.getElementById('bookingNotesInput').value.trim();
+
+      const newLeadId = `lead-${Date.now().toString().slice(-3)}`;
+      APP_STATE.adminLeads.unshift({
+        id: newLeadId,
+        employer: APP_STATE.currentUser.businessName,
+        candidate: `${k.name} (${k.craft})`,
+        status: `Shift: ${shift} • ${notes || 'Verified inquiry'}`,
+        phone: k.phone,
+        connected: false
+      });
+
+      closeBookingModal();
+      showToast(`📞 Match Request #${newLeadId} sent to Admin Desk!`);
+      setTimeout(() => goToScreen('screen-admin-panel'), 500);
+    }
+
+    // --- KARIGAR FEED ACTIONS ---
+    function renderKarigarFeed() {
+      const container = document.getElementById('karigarGigsList');
+      if (!container) return;
+
+      container.innerHTML = APP_STATE.gigs.map(g => `
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <span class="tag primary">${g.tag}</span>
+              <div style="font-size:15px;font-weight:800;margin-top:4px;">${g.employer}</div>
+              <div style="font-size:11.5px;color:var(--text-secondary);">${g.locality}</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:15px;font-weight:800;color:var(--primary-dark);">${g.wage}</div>
+              <div style="font-size:10.5px;color:var(--text-secondary);">${g.wageUnit}</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;padding-top:8px;border-top:1px solid #F5F5F4;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:11.5px;color:#16A34A;font-weight:700;"><i class="fa-solid fa-bowl-food"></i> ${g.perks}</span>
+            <button class="btn-primary" style="padding:6px 12px;font-size:11.5px;width:auto;${g.applied ? 'background:#16A34A;box-shadow:none;' : ''}" onclick="applyForGig('${g.id}', this)">
+              ${g.applied ? '✓ Applied' : 'Quick Apply <i class="fa-solid fa-paper-plane"></i>'}
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function applyForGig(id, btn) {
+      const gig = APP_STATE.gigs.find(g => g.id === id);
+      if (!gig) return;
+      gig.applied = true;
+      btn.innerHTML = '✓ Applied';
+      btn.style.background = '#16A34A';
+      btn.style.boxShadow = 'none';
+
+      showToast(`✅ Applied to ${gig.employer}!`);
+      setTimeout(() => goToScreen('screen-whatsapp-chat'), 500);
+    }
+
+    // --- NOTIFICATIONS CENTER ---
+    function renderNotifications() {
+      const container = document.getElementById('notificationsContainer');
+      if (!container) return;
+
+      container.innerHTML = APP_STATE.notifications.map(n => `
+        <div class="card" style="border-left:4px solid ${n.color};">
+          <div style="display:flex;gap:10px;">
+            <i class="fa-solid ${n.icon}" style="color:${n.color};font-size:18px;margin-top:2px;"></i>
+            <div style="flex:1;">
+              <div style="font-size:13.5px;font-weight:800;">${n.title}</div>
+              <div style="font-size:11.5px;color:var(--text-secondary);margin:2px 0 6px 0;">${n.desc}</div>
+              <button class="btn-primary" style="padding:6px 12px;font-size:11px;width:auto;" onclick="goToScreen('${n.actionScreen}')">
+                ${n.actionText}
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- WHATSAPP CHAT LOGIC ---
+    function renderChatMessages() {
+      const container = document.getElementById('chatMessagesContainer');
+      if (!container) return;
+
+      container.innerHTML = APP_STATE.chatMessages.map(m => {
+        if (m.type === 'bot') {
+          return `<div class="chat-bubble-bot">${m.html || m.text}</div>`;
+        } else {
+          return `<div class="chat-bubble-user">${m.text}</div>`;
+        }
+      }).join('');
+
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function sendQuickReply(num) {
+      APP_STATE.chatMessages.push({ type: 'user', text: num });
+      renderChatMessages();
+
+      // Show typing indicator
+      const container = document.getElementById('chatMessagesContainer');
+      const typingEl = document.createElement('div');
+      typingEl.className = 'chat-bubble-bot typing-dots';
+      typingEl.id = 'typingIndicator';
+      typingEl.innerHTML = 'Karigar Mitra typing <span></span><span></span><span></span>';
+      container.appendChild(typingEl);
+      container.scrollTop = container.scrollHeight;
+
+      setTimeout(() => {
+        const ind = document.getElementById('typingIndicator');
+        if (ind) ind.remove();
+
+        if (num === '1') {
+          APP_STATE.chatMessages.push({
+            type: 'bot',
+            html: '✅ <b>Thank you!</b> Your confirmation for <b>Sharma Sweets</b> has been received. Our Kanpur Admin Team will call you shortly on your registered number.'
+          });
+          showToast('WhatsApp match confirmed!');
+        } else {
+          APP_STATE.chatMessages.push({
+            type: 'bot',
+            html: '👍 <b>Understood.</b> We will notify you when other catering orders matching your craft become available in Kanpur.'
+          });
+        }
+        renderChatMessages();
+      }, 700);
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatTextInput');
+      const val = input.value.trim();
+      if (!val) return;
+      input.value = '';
+      sendQuickReply(val);
+    }
+
+    // --- ADMIN MATCH PORTAL ---
+    function renderAdminLeads() {
+      const container = document.getElementById('adminLeadsContainer');
+      if (!container) return;
+
+      container.innerHTML = APP_STATE.adminLeads.map(lead => `
+        <div class="card" style="border-left:4px solid ${lead.connected ? '#16A34A' : 'var(--primary)'};">
+          <div style="font-size:12.5px;font-weight:800;margin-bottom:5px;">Pending Match #${lead.id}</div>
+          <div style="font-size:11.5px;color:#44403C;line-height:1.45;">
+            <b>Employer:</b> ${lead.employer}<br>
+            <b>Candidate:</b> ${lead.candidate}<br>
+            <b>Status:</b> ${lead.connected ? '<span style="color:#16A34A;font-weight:800;">✓ Connected with Employer</span>' : lead.status}
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;">
+            <button class="btn-primary" style="padding:6px 10px;font-size:10.5px;width:auto;" onclick="startSimulatedCall('${lead.candidate.split('(')[0]}', '${lead.phone}')">
+              <i class="fa-solid fa-phone"></i> Call Karigar
+            </button>
+            <button class="btn-whatsapp" style="padding:6px 10px;font-size:10.5px;width:auto;${lead.connected ? 'background:#15803D;' : ''}" onclick="connectLead('${lead.id}')">
+              ${lead.connected ? '✓ Connected' : 'Connect Employer'}
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function connectLead(leadId) {
+      const lead = APP_STATE.adminLeads.find(l => l.id === leadId);
+      if (!lead) return;
+      lead.connected = true;
+      showToast(`🤝 Connected ${lead.employer} with artisan!`);
+      renderAdminLeads();
+    }
+
+    // --- SIMULATED CALL OVERLAY ---
+    function startSimulatedCall(name, phone) {
+      const overlay = document.getElementById('callOverlay');
+      document.getElementById('callTargetName').textContent = name;
+      document.getElementById('callTargetPhone').textContent = phone;
+      document.getElementById('callTimer').textContent = 'Connecting...';
+      overlay.classList.add('active');
+
+      APP_STATE.callSeconds = 0;
+      setTimeout(() => {
+        document.getElementById('callTimer').textContent = '00:01';
+        APP_STATE.callInterval = setInterval(() => {
+          APP_STATE.callSeconds++;
+          const mins = Math.floor(APP_STATE.callSeconds / 60).toString().padStart(2, '0');
+          const secs = (APP_STATE.callSeconds % 60).toString().padStart(2, '0');
+          document.getElementById('callTimer').textContent = `${mins}:${secs}`;
+        }, 1000);
+      }, 900);
+    }
+
+    function endSimulatedCall() {
+      clearInterval(APP_STATE.callInterval);
+      document.getElementById('callOverlay').classList.remove('active');
+      showToast('Call ended with artisan.');
+    }
+
+    function callHelpline() {
+      startSimulatedCall('Kanpur Karigar 24x7 Helpline', '0512-233-0192');
+    }
+
+    function logOutUser() {
+      showToast('Logged out successfully');
+      setTimeout(() => goToScreen('screen-splash'), 300);
+    }
+
+    // --- CLOCK & INITIALIZATION ---
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const el = document.getElementById('statusTime');
+      if (el) el.textContent = `${hours}:${minutes}`;
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       updateClock();
       setInterval(updateClock, 10000);
+      renderDashboardRequirements();
+      renderKarigars();
+      renderKarigarFeed();
+      renderNotifications();
+      renderAdminLeads();
+      renderChatMessages();
       goToScreen('screen-splash');
     });
   </script>
