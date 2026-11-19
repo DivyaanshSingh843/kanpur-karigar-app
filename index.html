@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanpur Karigar — कानपुर का अपना Hiring Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root {
+    --primary: #F05A28;
+    --primary-dark: #D44211;
+    --primary-light: #FFF0EB;
+    --secondary: #FF9900;
+    --accent-green: #16A34A;
+    --accent-green-light: #DCFCE7;
+    --bg-phone: #FBF9F7;
+    --card-white: #FFFFFF;
+    --text-primary: #1C1917;
+    --text-secondary: #78716C;
+    --border-light: #E7E5E4;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: radial-gradient(circle at 50% 10%, #F5EFEB 0%, #E3D9D0 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    color: var(--text-primary);
+  }
+
+  .web-header {
+    margin-bottom: 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .web-header .badge {
+    background: #FFF;
+    border: 1px solid #E2D9D2;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: var(--shadow-sm);
+  }
+  .web-header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #292524;
+  }
+  .web-header p {
+    font-size: 14px;
+    color: #78716C;
+    max-width: 520px;
+  }
+
+  .screen-selector-bar {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.06);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .screen-selector-bar span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #44403C;
+  }
+  .screen-select {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #D6D3D1;
+    font-size: 13px;
+    font-weight: 600;
+    background: #FAFAF9;
+    color: var(--primary-dark);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .device-wrapper {
+    position: relative;
+    width: 390px;
+    height: 844px;
+    border-radius: 54px;
+    background: #111;
+    padding: 12px;
+    box-shadow: 
+      0 40px 80px -20px rgba(45, 20, 10, 0.45),
+      0 12px 28px -8px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 2px #444,
+      inset 0 0 0 5px #222;
+  }
+
+  .notch {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 32px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 14px;
+  }
+  .notch .lens {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #111;
+    border: 1px solid #222;
+  }
+
+  .screen-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-phone);
+    border-radius: 44px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+  .screen-viewport::-webkit-scrollbar { display: none; }
+
+  .status-bar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 44px;
+    padding: 12px 28px 0 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1C1917;
+    z-index: 90;
+    background: transparent;
+  }
+  .status-icons { display: flex; gap: 6px; font-size: 11px; }
+
+  .app-screen {
+    display: none;
+    min-height: 100%;
+    padding: 12px 18px 90px 18px;
+    animation: fadeIn 0.2s ease-out;
+  }
+  .app-screen.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .bottom-nav {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    height: 68px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    border-radius: 0 0 42px 42px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 8px;
+    z-index: 80;
+  }
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    color: #A8A29E;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .nav-item.active { color: var(--primary); }
+  .nav-item i { font-size: 18px; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #FFF;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 8px 18px -4px rgba(240, 90, 40, 0.35);
+  }
+  .btn-primary:active { transform: scale(0.98); }
+
+  .btn-whatsapp {
+    background: #25D366;
+    color: #FFF;
+    border: none;
+    border-radius: 14px;
+    padding: 13px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px -3px rgba(37, 211, 102, 0.3);
+  }
+
+  .card {
+    background: var(--card-white);
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #F5F5F4;
+    color: #57534E;
+  }
+  .tag.primary { background: var(--primary-light); color: var(--primary-dark); }
+  .tag.green { background: var(--accent-green-light); color: var(--accent-green); }
+
+  #screen-splash {
+    background: linear-gradient(160deg, #F05A28 0%, #D44211 50%, #992905 100%);
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 80px 24px 40px 24px;
+  }
+  .splash-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 30px;
+    background: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    margin: 0 auto 20px auto;
+  }
+  .splash-logo i { font-size: 50px; color: var(--primary); }
+  .splash-title { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
+  .splash-sub { font-size: 16px; opacity: 0.95; margin-top: 6px; font-family: 'Tiro Devanagari Hindi', serif; }
+
+  .phone-input-wrap {
+    display: flex;
+    align-items: center;
+    background: #F5F5F4;
+    border: 1px solid #E7E5E4;
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin: 16px 0;
+  }
+  .phone-input-wrap span { font-weight: 700; color: #44403C; padding-right: 10px; border-right: 1px solid #D6D3D1; margin-right: 10px; }
+  .phone-input-wrap input { border: none; background: transparent; font-size: 16px; font-weight: 600; width: 100%; outline: none; }
+
+  .otp-boxes {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .otp-box {
+    width: 54px;
+    height: 56px;
+    border-radius: 14px;
+    border: 2px solid #E7E5E4;
+    background: #FFF;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .otp-box.filled { border-color: var(--primary); background: var(--primary-light); }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    background: #FFF;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 14px;
+  }
+  .stat-num { font-size: 26px; font-weight: 800; color: var(--primary-dark); }
+  .stat-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-top: 2px; }
+
+  .sos-banner {
+    background: linear-gradient(135deg, #FFF1EC 0%, #FFE4DA 100%);
+    border: 1px solid #FFD3C2;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: #FFF;
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    padding: 10px 14px;
+    gap: 10px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+  }
+  .search-bar input { border: none; outline: none; width: 100%; font-size: 14px; }
+  .category-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    scrollbar-width: none;
+  }
+  .cat-pill {
+    white-space: nowrap;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #FFF;
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+  }
+  .cat-pill.active {
+    background: var(--primary);
+    color: #FFF;
+    border-color: var(--primary);
+  }
+
+  .karigar-card {
+    background: #FFF;
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+  }
+  .karigar-header { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+  .karigar-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: #FFE5D9;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+  <div class="web-header">
+    <div class="badge"><i class="fa-solid fa-location-dot"></i> Kanpur Hyperlocal Artisan Network</div>
+    <h1>Kanpur Karigar — Interactive Prototype</h1>
+    <p>Complete 15 screens built from the wireframes PDF into an interactive mobile device container.</p>
+  </div>
+
+  <div class="screen-selector-bar">
+    <span><i class="fa-solid fa-mobile-screen"></i> Switch Screen:</span>
+    <select id="screenSelect" class="screen-select" onchange="goToScreen(this.value)">
+      <option value="screen-splash">1. Splash Screen (आगमन)</option>
+      <option value="screen-lang">2. Language Selection (भाषा चुनें)</option>
+      <option value="screen-login">3. Login & OTP (लॉगिन)</option>
+      <option value="screen-role">4. Role Switcher (भूमिका)</option>
+      <option value="screen-employer-reg">5. Employer Registration (मालिक पंजीयन)</option>
+      <option value="screen-dashboard" selected>6. Employer Dashboard (मालिक डैशबोर्ड)</option>
+      <option value="screen-post-job">7. Post Requirement (मांग डालें)</option>
+      <option value="screen-search">8. Search Karigars (कारीगर खोजें)</option>
+      <option value="screen-karigar-profile">9. Karigar Detail Profile (कारीगर विवरण)</option>
+      <option value="screen-karigar-reg">10. Karigar Registration (कारीगर पंजीयन)</option>
+      <option value="screen-karigar-feed">11. Karigar Job Feed (काम की खोज)</option>
+      <option value="screen-notifications">12. Notifications (सूचनाएं)</option>
+      <option value="screen-whatsapp-chat">13. WhatsApp Broadcast (व्हाट्सएप मित्र)</option>
+      <option value="screen-my-profile">14. My Profile & Settings (मेरी प्रोफाइल)</option>
+      <option value="screen-admin-panel">15. Admin Operations Portal (व्यवस्थापक)</option>
+    </select>
+  </div>
+
+  <div class="device-wrapper">
+    <div class="notch"><div class="lens"></div></div>
+
+    <div class="screen-viewport">
+      <div class="status-bar">
+        <span>09:41</span>
+        <div class="status-icons">
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
+        </div>
+      </div>
+
+      <!-- 1. SPLASH -->
+      <div id="screen-splash" class="app-screen">
+        <div></div>
+        <div>
+          <div class="splash-logo"><i class="fa-solid fa-utensils"></i></div>
+          <div class="splash-title">Kanpur Karigar</div>
+          <div class="splash-sub">कारीगर भी अपना, काम भी अपना</div>
+          <p style="font-size:12px;opacity:0.8;margin-top:10px;">Kanpur का अपना Food Artisan Hiring Platform</p>
+        </div>
+        <div style="width:100%;">
+          <button class="btn-primary" style="background:#FFF;color:var(--primary);" onclick="goToScreen('screen-lang')">
+            Get Started • शुरू करें <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <p style="font-size:11px;opacity:0.75;margin-top:12px;">गुमटी नं. 5 • स्वरूप नगर • सिविल लाइंस • कल्याणपुर</p>
+        </div>
+      </div>
+
+      <!-- 2. LANGUAGE -->
+      <div id="screen-lang" class="app-screen">
+        <h2 style="font-size:22px;font-weight:800;margin:16px 0 6px 0;">अपनी भाषा चुनें</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:24px;">Choose your preferred language</p>
+        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;" onclick="selectLang(this)">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:17px;font-weight:700;color:var(--primary-dark);">हिन्दी (अनुशंसित)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">आसानी से बोलकर या पढ़कर समझें</div>
+            </div>
+            <i class="fa-solid fa-circle-check" style="color:var(--primary);font-size:20px;"></i>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;" onclick="selectLang(this)">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:17px;font-weight:700;">English</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">Browse in professional English</div>
+            </div>
+            <i class="fa-regular fa-circle" style="color:#D6D3D1;font-size:20px;"></i>
+          </div>
+        </div>
+        <div style="margin-top:140px;">
+          <button class="btn-primary" onclick="goToScreen('screen-login')">
+            आगे बढ़ें / Continue <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. LOGIN & OTP -->
+      <div id="screen-login" class="app-screen">
+        <h2 style="font-size:22px;font-weight:800;margin:16px 0 4px 0;">नमस्ते! लॉगिन या रजिस्टर करें</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;">Free access to all food artisans in Kanpur</p>
+        <div class="phone-input-wrap">
+          <span>+91</span>
+          <input type="tel" value="98390 12345" placeholder="मोबाइल नंबर डालें">
+        </div>
+        <p style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;">4-Digit OTP डालें (Verification Code)</p>
+        <div class="otp-boxes">
+          <div class="otp-box filled">7</div>
+          <div class="otp-box filled">4</div>
+          <div class="otp-box filled">9</div>
+          <div class="otp-box">1</div>
+        </div>
+        <button class="btn-primary" style="margin-top:12px;" onclick="goToScreen('screen-role')">
+          Verify करें & आगे बढ़ें <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <div style="text-align:center;margin:18px 0;font-size:12px;color:#A8A29E;">
+          <span>— या व्हाट्सएप द्वारा जुड़ें —</span>
+        </div>
+        <button class="btn-whatsapp" onclick="goToScreen('screen-dashboard')">
+          <i class="fa-brands fa-whatsapp" style="font-size:18px;"></i> Continue with WhatsApp
+        </button>
+      </div>
+
+      <!-- 4. ROLE -->
+      <div id="screen-role" class="app-screen">
+        <h2 style="font-size:22px;font-weight:800;margin:16px 0 4px 0;">आप किस रूप में जुड़ना चाहते हैं?</h2>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:24px;">Select your account type</p>
+        <div class="card" style="border:2px solid var(--primary);background:var(--primary-light);cursor:pointer;" onclick="goToScreen('screen-employer-reg')">
+          <div style="display:flex;gap:14px;align-items:center;">
+            <div style="width:54px;height:54px;border-radius:14px;background:#FFF;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:24px;">
+              <i class="fa-solid fa-shop"></i>
+            </div>
+            <div>
+              <div style="font-size:17px;font-weight:800;color:var(--primary-dark);">मैं मालिक हूँ (Employer)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">मिष्ठान भंडार, ढाबा, रेस्टोरेंट या कैटरिंग के लिए कारीगर चाहिए</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;" onclick="goToScreen('screen-karigar-reg')">
+          <div style="display:flex;gap:14px;align-items:center;">
+            <div style="width:54px;height:54px;border-radius:14px;background:#F5F5F4;display:flex;align-items:center;justify-content:center;color:#44403C;font-size:24px;">
+              <i class="fa-solid fa-hat-chef"></i>
+            </div>
+            <div>
+              <div style="font-size:17px;font-weight:800;">मैं कारीगर हूँ (Karigar)</div>
+              <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">हलवाई, तंदूर, चाट या चाइनीज कुक - काम चाहिए</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. EMPLOYER REG -->
+      <div id="screen-employer-reg" class="app-screen">
+        <h2 style="font-size:20px;font-weight:800;margin:12px 0 4px 0;">प्रतिष्ठान का विवरण</h2>
+        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:16px;">Step 1 of 2 • Business Profile</p>
+        <div class="card">
+          <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">मालिक का नाम</label>
+          <input type="text" value="राजेश शर्मा (Rajesh Sharma)" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;font-size:14px;outline:none;">
+          <label style="font-size:12px;font-weight:700;display:block;margin:12px 0 6px 0;">दुकान / बिजनेस का नाम</label>
+          <input type="text" value="Sharma Sweets & Caterers" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;font-size:14px;outline:none;">
+          <label style="font-size:12px;font-weight:700;display:block;margin:12px 0 6px 0;">व्यापार का प्रकार</label>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <span class="tag primary">Sweet Shop</span>
+            <span class="tag">Catering</span>
+            <span class="tag">Dhaba</span>
+            <span class="tag">Restaurant</span>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="goToScreen('screen-dashboard')">Profile बनाएँ <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+
+      <!-- 6. EMPLOYER DASHBOARD -->
+      <div id="screen-dashboard" class="app-screen active">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0 16px 0;">
+          <div>
+            <div style="font-size:13px;color:var(--text-secondary);font-weight:600;">नमस्ते,</div>
+            <div style="font-size:20px;font-weight:800;">Sharma Sweets 👋</div>
+          </div>
+          <span class="tag green"><i class="fa-solid fa-circle-check"></i> Verified Owner</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-num">03</div><div class="stat-label">Active Demands</div></div>
+          <div class="stat-card"><div class="stat-num">14</div><div class="stat-label">Applications</div></div>
+          <div class="stat-card"><div class="stat-num">02</div><div class="stat-label">On Duty</div></div>
+          <div class="stat-card"><div class="stat-num">₹4,200</div><div class="stat-label">Month Spend</div></div>
+        </div>
+        <div class="sos-banner">
+          <div style="font-size:13px;font-weight:800;color:#992905;">🚨 URGENT SOS (30 Min Match)</div>
+          <div style="font-size:15px;font-weight:800;color:#992905;margin:4px 0;">आज रात के लिए तत्काल कारीगर चाहिए?</div>
+          <button class="btn-primary" style="padding:8px 12px;font-size:12px;width:auto;margin-top:6px;" onclick="goToScreen('screen-search')">
+            Book Instant • तत्काल खोजें <i class="fa-solid fa-bolt"></i>
+          </button>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:16px;">
+          <button class="btn-primary" style="font-size:13px;padding:12px;" onclick="goToScreen('screen-post-job')">
+            <i class="fa-solid fa-plus"></i> नई Requirement
+          </button>
+          <button class="btn-primary" style="background:#FFF;color:var(--primary-dark);border:1px solid #FFD3C2;font-size:13px;padding:12px;box-shadow:none;" onclick="goToScreen('screen-search')">
+            <i class="fa-solid fa-magnifying-glass"></i> कारीगर खोजें
+          </button>
+        </div>
+        <h3 style="font-size:15px;font-weight:800;margin-bottom:8px;">मेरी Requirements</h3>
+        <div class="card" style="border-left:4px solid var(--primary);">
+          <div style="display:flex;justify-content:space-between;">
+            <div><b>Halwai Karigar • 2 पद</b><div style="font-size:12px;color:var(--text-secondary);">किदवई नगर • ₹18,000/माह</div></div>
+            <span class="tag green">Active</span>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:#444;">इच्छुक: <b>8 कारीगर</b> • Shortlisted: <b>3</b></div>
+        </div>
+      </div>
+
+      <!-- 7. POST JOB -->
+      <div id="screen-post-job" class="app-screen">
+        <h2 style="font-size:20px;font-weight:800;margin:12px 0 4px 0;">नई Requirement पोस्ट करें</h2>
+        <div class="card">
+          <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px;">पद का नाम</label>
+          <input type="text" value="Master Halwai (हलवाई कारीगर)" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;font-size:14px;outline:none;">
+          <label style="font-size:12px;font-weight:700;display:block;margin:12px 0 6px 0;">वेतन प्रस्ताव (Salary)</label>
+          <input type="text" value="₹18,000 / महीना" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;font-size:14px;outline:none;">
+        </div>
+        <button class="btn-primary" onclick="goToScreen('screen-dashboard')">Post करें (Free) <i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+
+      <!-- 8. SEARCH -->
+      <div id="screen-search" class="app-screen">
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass" style="color:#A8A29E;"></i>
+          <input type="text" placeholder="कारीगर खोजें (e.g. हलवाई, तंदूर)">
+        </div>
+        <div class="karigar-card">
+          <div class="karigar-header">
+            <div class="karigar-avatar">RK</div>
+            <div style="flex:1;">
+              <div style="display:flex;justify-content:space-between;">
+                <b>रमेश कुमार (Ramesh Kumar)</b>
+                <span class="tag green">Verified</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-secondary);">हलवाई • 8 साल अनुभव • किदवई नगर</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+            <b>₹18,000 / माह</b>
+            <button class="btn-primary" style="padding:8px 12px;font-size:12px;width:auto;" onclick="goToScreen('screen-karigar-profile')">Profile देखें</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. DETAIL PROFILE -->
+      <div id="screen-karigar-profile" class="app-screen">
+        <span style="font-size:14px;font-weight:700;color:var(--primary);cursor:pointer;" onclick="goToScreen('screen-search')">
+          <i class="fa-solid fa-arrow-left"></i> वापस
+        </span>
+        <div class="card" style="text-align:center;margin-top:12px;">
+          <div class="karigar-avatar" style="width:70px;height:70px;margin:0 auto 10px auto;font-size:26px;">RK</div>
+          <h2>रमेश कुमार (Ramesh Kumar)</h2>
+          <p style="font-size:13px;color:var(--text-secondary);">Master Halwai • 8 Years Experience</p>
+          <div style="font-size:18px;font-weight:800;color:var(--primary-dark);margin:12px 0;">₹18,000 / महीना</div>
+        </div>
+        <div class="card" style="background:#FFFBEB;border:1px solid #FDE68A;">
+          <b style="color:#92400E;"><i class="fa-solid fa-lock"></i> Mobile Number सुरक्षित है</b>
+          <p style="font-size:12px;color:#B45309;margin-top:4px;">Admin Team कारीगर से बात करके आपको सीधे जोड़ेगी।</p>
+        </div>
+        <button class="btn-primary" onclick="alert('Admin Team को सूचना भेज दी गई है।')">
+          <i class="fa-solid fa-headset"></i> Admin से बात करवाएँ (Connect)
+        </button>
+      </div>
+
+      <!-- 10. KARIGAR REG -->
+      <div id="screen-karigar-reg" class="app-screen">
+        <h2 style="font-size:20px;font-weight:800;margin:12px 0;">कारीगर पंजीयन</h2>
+        <div class="card">
+          <label style="font-size:12px;font-weight:700;">पूरा नाम</label>
+          <input type="text" value="सुरेश कुमार कश्यप" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;margin-bottom:10px;">
+          <label style="font-size:12px;font-weight:700;">हुनर (Category)</label>
+          <input type="text" value="हलवाई (Halwai)" style="width:100%;padding:10px;border:1px solid #E7E5E4;border-radius:10px;">
+        </div>
+        <button class="btn-primary" onclick="goToScreen('screen-karigar-feed')">पंजीकरण पूरा करें <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+
+      <!-- 11. KARIGAR FEED -->
+      <div id="screen-karigar-feed" class="app-screen">
+        <div style="font-size:18px;font-weight:800;margin-bottom:12px;">सुरेश कारीगर (Online)</div>
+        <div class="card" style="background:#1C1917;color:#FFF;">
+          <div style="font-size:12px;opacity:0.8;">अक्टूबर कमाई</div>
+          <div style="font-size:26px;font-weight:800;color:#FDE047;">₹24,800</div>
+        </div>
+        <div class="card">
+          <b>Sharma Sweets & Caterers</b>
+          <div style="font-size:12px;color:var(--text-secondary);">किदवई नगर • ₹1,800 / दिन</div>
+          <button class="btn-primary" style="margin-top:10px;padding:8px;font-size:12px;" onclick="alert('आवेदन भेज दिया गया!')">आवेदन करें (Apply)</button>
+        </div>
+      </div>
+
+      <!-- 12. NOTIFICATIONS -->
+      <div id="screen-notifications" class="app-screen">
+        <h2 style="font-size:20px;font-weight:800;margin:12px 0;">सूचनाएं</h2>
+        <div class="card" style="border-left:4px solid var(--accent-green);">
+          <b>Sharma Sweets ने आपको Shortlist किया</b>
+          <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;">14 Feb शादी कार्यक्रम</div>
+        </div>
+      </div>
+
+      <!-- 13. WHATSAPP CHAT -->
+      <div id="screen-whatsapp-chat" class="app-screen">
+        <div style="background:#075E54;color:#FFF;padding:12px;border-radius:14px;margin-bottom:12px;">
+          <b>कारीगर मित्र कानपुर (WhatsApp Bot)</b>
+        </div>
+        <div class="card" style="font-size:13px;line-height:1.4;">
+          Sharma Sweets: Halwai Karigar • ₹18,000/माह<br>काम में रुचि हो तो <b>1</b> भेजें।
+        </div>
+        <div style="background:#DCF8C6;padding:8px 14px;border-radius:10px;max-width:40px;margin-left:auto;margin-bottom:10px;font-weight:800;">1</div>
+        <div class="card" style="font-size:13px;">✅ धन्यवाद! हमारी कानपुर Admin Team आपसे जल्द संपर्क करेगी।</div>
+      </div>
+
+      <!-- 14. MY PROFILE -->
+      <div id="screen-my-profile" class="app-screen">
+        <h2 style="font-size:20px;font-weight:800;margin:12px 0;">मेरी प्रोफाइल</h2>
+        <div class="card" style="text-align:center;">
+          <div class="karigar-avatar" style="margin:0 auto 10px auto;">SS</div>
+          <b>Sharma Sweets & Caterers</b>
+          <p style="font-size:12px;color:var(--text-secondary);">Kidwai Nagar, Kanpur</p>
+        </div>
+      </div>
+
+      <!-- 15. ADMIN PANEL -->
+      <div id="screen-admin-panel" class="app-screen">
+        <div style="background:#1C1917;color:#FFF;padding:10px;border-radius:10px;margin-bottom:12px;">
+          <b><i class="fa-solid fa-shield-halved" style="color:var(--primary);"></i> Admin Dispatch Portal</b>
+        </div>
+        <div class="card">
+          <b>#101: Sharma Sweets ➔ Ramesh Kumar</b>
+          <div style="font-size:12px;color:var(--text-secondary);margin:4px 0 10px 0;">Status: Pending Match</div>
+          <button class="btn-primary" style="padding:8px;font-size:12px;" onclick="alert('Calling Karigar!')">Call Karigar & Connect</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+      <div class="nav-item active" onclick="goToScreen('screen-dashboard')">
+        <i class="fa-solid fa-house"></i>
+        <span>होम</span>
+      </div>
+      <div class="nav-item" onclick="goToScreen('screen-search')">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>खोजें</span>
+      </div>
+      <div class="nav-item" onclick="goToScreen('screen-post-job')">
+        <i class="fa-solid fa-circle-plus" style="font-size:24px;color:var(--primary);"></i>
+        <span>मांग डालें</span>
+      </div>
+      <div class="nav-item" onclick="goToScreen('screen-notifications')">
+        <i class="fa-solid fa-bell"></i>
+        <span>सूचना</span>
+      </div>
+      <div class="nav-item" onclick="goToScreen('screen-my-profile')">
+        <i class="fa-solid fa-user"></i>
+        <span>प्रोफाइल</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goToScreen(screenId) {
+      document.querySelectorAll('.app-screen').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(screenId);
+      if (target) {
+        target.classList.add('active');
+        document.querySelector('.screen-viewport').scrollTop = 0;
+      }
+      const select = document.getElementById('screenSelect');
+      if (select) select.value = screenId;
+
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      if (screenId === 'screen-dashboard') document.querySelectorAll('.nav-item')[0].classList.add('active');
+      if (screenId === 'screen-search') document.querySelectorAll('.nav-item')[1].classList.add('active');
+      if (screenId === 'screen-post-job') document.querySelectorAll('.nav-item')[2].classList.add('active');
+      if (screenId === 'screen-notifications') document.querySelectorAll('.nav-item')[3].classList.add('active');
+      if (screenId === 'screen-my-profile') document.querySelectorAll('.nav-item')[4].classList.add('active');
+    }
+
+    function selectLang(el) {
+      document.querySelectorAll('#screen-lang .card').forEach(c => {
+        c.style.borderColor = 'var(--border-light)';
+        c.style.background = '#FFF';
+        c.querySelector('i').className = 'fa-regular fa-circle';
+        c.querySelector('i').style.color = '#D6D3D1';
+      });
+      el.style.borderColor = 'var(--primary)';
+      el.style.background = 'var(--primary-light)';
+      el.querySelector('i').className = 'fa-solid fa-circle-check';
+      el.querySelector('i').style.color = 'var(--primary)';
+    }
+  </script>
+</body>
+</html>
